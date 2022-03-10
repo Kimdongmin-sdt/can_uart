@@ -1,13 +1,31 @@
 {
     "config" : {
-
+        "io_link_spi_mosi" : {
+            "help" : "io_link_spi_mosi"
+        },
+        "io_link_spi_miso" : {
+            "help" : "io_link_spi_miso"
+        },
+        "io_link_spi_cs" : {
+            "help" : "io_link_spi_cs"
+        },
+        "io_link_spi_sck" : {
+            "help" : "io_link_spi_sck"
+        },
+        "io_link_spi_irq" : {
+            "help" : "io_link_spi_irq"
+        }
     },
-
     "target_overrides": {
         "NUCLEO_F429ZI": {
             "platform.stdio-baud-rate": 115200,
             "target.stdio_uart_tx": "PA_9",
-            "target.stdio_uart_rx": "PB_3"
+            "target.stdio_uart_rx": "PB_3",
+            "io_link_spi_mosi" : "PA_3",
+            "io_link_spi_miso" : "PC_3",
+            "io_link_spi_cs" : "PD_3",
+            "io_link_spi_sck" : "PB_3",
+            "io_link_spi_irq" : "PB_3"
         }
     }
 }
