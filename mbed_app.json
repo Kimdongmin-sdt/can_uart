@@ -1,0 +1,13 @@
+{
+    "config" : {
+
+    },
+
+    "target_overrides": {
+        "NUCLEO_F429ZI": {
+            "platform.stdio-baud-rate": 115200,
+            "target.stdio_uart_tx": "PA_9",
+            "target.stdio_uart_rx": "PB_3"
+        }
+    }
+}
