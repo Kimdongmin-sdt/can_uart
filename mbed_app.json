@@ -18,14 +18,13 @@
     },
     "target_overrides": {
         "NUCLEO_F429ZI": {
-            "platform.stdio-baud-rate": 115200,
-            "target.stdio_uart_tx": "PA_9",
-            "target.stdio_uart_rx": "PB_3",
-            "io_link_spi_mosi" : "PA_3",
-            "io_link_spi_miso" : "PC_3",
-            "io_link_spi_cs" : "PD_3",
-            "io_link_spi_sck" : "PB_3",
-            "io_link_spi_irq" : "PB_3"
+            "platform.stdio-baud-rate"  : 115200,
+            "target.stdio_uart_tx"      : "PD_5",
+            "target.stdio_uart_rx"      : "PD_6",
+            "io_link_spi_mosi"          : "PB_15",
+            "io_link_spi_miso"          : "PB_14",
+            "io_link_spi_cs"            : "PB_12",
+            "io_link_spi_sck"           : "PB_10"
         }
     }
 }

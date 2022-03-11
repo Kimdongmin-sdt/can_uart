@@ -29,7 +29,8 @@
 #ifndef _HARDWARARDUINO_H
 #define _HARDWARARDUINO_H
 
-#define ARDUINO_FUNC 0
+#define ARDUINO_FUNC 	0
+#define SPI_FREQUENCY 	20000000
 //!**** Header-Files ************************************************************
 #include "HardwareBase.h"
 #include "mbed_header.h"
@@ -54,8 +55,8 @@ public:
 
 	virtual void begin();
 
-	virtual void IO_Write(PinNames pinname, uint8_t state);
-	virtual void IO_PinMode(PinNames pinname, PinMode mode); //pinMode
+	virtual void IO_Write(HardwareBase::PinNames pinname, uint8_t state);
+	virtual void IO_PinMode(HardwareBase::PinNames pinname, PinMode mode); //pinMode
 
 	virtual void Serial_Write(char const * buf);
 	virtual void Serial_Write(int number);
@@ -63,9 +64,11 @@ public:
 	virtual void SPI_Write(uint8_t channel, uint8_t * data, uint8_t length);
 
 	virtual void wait_for(uint32_t delay_ms);
+    SPI *IOLINK_spi;
+	DigitalOut *IOLINK_spi_cs;
 
 private:
-	uint8_t get_pinnumber(PinNames pinname);
+	PinName get_pinnumber(HardwareBase::PinNames pinname);
 };
 
 #endif //_HARDWARARDUINO_H

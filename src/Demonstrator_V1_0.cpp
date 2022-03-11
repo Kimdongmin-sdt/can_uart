@@ -24,7 +24,7 @@
 //!	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //!	 See the License for the specific language governing permissions and
 //!	 limitations under the License.
-//!	
+//!
 //!*****************************************************************************
 
 //!**** Header-Files ***********************************************************
@@ -41,7 +41,7 @@
 	#include <stdio.h>
 #else
 	#include <cstdio>
-#endif	
+#endif
 
 //!**** Macros *****************************************************************
 
@@ -65,7 +65,7 @@ void Demo_setup(HardwareBase *hardware_loc)
 	// Create hardware setup
     hardware = hardware_loc;
 	hardware->begin();
-	
+
     // Create drivers
     max14819::Max14819 *pDriver01 = new max14819::Max14819(max14819::DRIVER01, hardware);
     max14819::Max14819 *pDriver23 = new max14819::Max14819(max14819::DRIVER23, hardware);
@@ -116,7 +116,7 @@ void Demo_loop()
 	uint16_t TANK_WARNING_LVL = 100;
 	uint32_t measureNr = 0;
 	constexpr uint16_t TANK_EMPTY_LVL = 50;
-	
+
 
     while(1){
         hardware->wait_for(100);
@@ -179,7 +179,7 @@ void Demo_loop()
                dataLED[4] = 1;						// Number of Segments: 1
                dataLED[5] = 0;						// 0b00000, Blinkmode flash 50%Duty (0) for all segments
                dataLED[6] = 2;						// Blink frequency 1Hz
-               dataLED[7] = 0;						// Buzzer Volume zero						
+               dataLED[7] = 0;						// Buzzer Volume zero
            }
             port1.writePD(10, dataLED, 2, IOL::M_TYPE_2_X);
         }

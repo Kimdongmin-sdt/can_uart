@@ -137,7 +137,7 @@ uint8_t IOLMasterPortMax14819::begin() {
     // Generate wakeup
     retValue = uint8_t(retValue | pDriver_->wakeUpRequest(port_, &comSpeed_ ));
    if(retValue == custom::ERROR){
-       // TODO: Serial.println("Error wakeup driver01 PortA");
+       printf("Error wakeup driver01 PortA\n");
    }
    else{
        sprintf(buf, "Communication established with %d bauds\n", comSpeed_);// TODO:

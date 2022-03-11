@@ -24,7 +24,7 @@
 //!	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //!	 See the License for the specific language governing permissions and
 //!	 limitations under the License.
-//!	
+//!
 //!*****************************************************************************
 
 //!**** Header-Files ***********************************************************
@@ -34,7 +34,7 @@
 	#include <stdio.h>
 #else
 	#include <cstdio>
-#endif	
+#endif
 
 //!**** Macros *****************************************************************
 
@@ -52,7 +52,7 @@ BalluffBus0023::BalluffBus0023():IOLGenericDevice(nullptr) {
 }
 
 BalluffBus0023::BalluffBus0023(IOLMasterPort * port) : IOLGenericDevice(port){
-	
+
 }
 
 //!*****************************************************************************
@@ -70,7 +70,8 @@ BalluffBus0023::BalluffBus0023(IOLMasterPort * port) : IOLGenericDevice(port){
 void BalluffBus0023::begin() {
 	port->begin();
 
-	/*uint8_t pData[3];
+	/*
+	uint8_t pData[3];
 	uint16_t VendorID;
 	uint32_t DeviceID;
 	port->readDirectParameterPage(0x02, pData);
@@ -84,7 +85,8 @@ void BalluffBus0023::begin() {
 	port->readDirectParameterPage(0x0A, pData + 1);
 	port->readDirectParameterPage(0x0B, pData + 2); //LSB
 	DeviceID = (pData[0] << 16) + (pData[1] << 8) + pData[2];
-	printf("Vendor ID: %d, Device ID: %d\n", VendorID, DeviceID);*/
+	printf("Vendor ID: %d, Device ID: %d\n", VendorID, DeviceID);
+	*/
 
 }
 

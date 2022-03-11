@@ -51,7 +51,10 @@ HardwareArduino::HardwareArduino()
     pinMode(52, in);
     pinMode(53, in);
 #else
-
+    IOLINK_spi 	  = new SPI(MBED_CONF_APP_IO_LINK_SPI_MOSI,
+                           MBED_CONF_APP_IO_LINK_SPI_MISO,
+                           MBED_CONF_APP_IO_LINK_SPI_SCK);
+	IOLINK_spi_cs = new DigitalOut(MBED_CONF_APP_IO_LINK_SPI_CS, 1);
 #endif
 }
 
@@ -85,6 +88,25 @@ void HardwareArduino::begin(){
 	Serial_Write("Init_SPI finished");
 	wait_for(1*1000);
 #else
+	// Setup the spi for 8 bit data, high steady state clock,
+    // second edge capture, with a 1MHz clock rate
+	/*
+	mode | POL PHA
+	-----+--------
+	  0  |  0   0
+	  1  |  0   1
+	  2  |  1   0
+	  3  |  1   1
+    */
+   	printf("\nBeginne mit der Initialisierung\n");
+
+    IOLINK_spi->format(8, 0);				// bit, spi mode
+	IOLINK_spi->frequency(SPI_FREQUENCY);
+	printf("Init_SPI finished\n");
+
+#define DURATION_MULTIPLE		1
+#define SLEEP_DURATION 			1000 * DURATION_MULTIPLE
+	ThisThread::sleep_for(SLEEP_DURATION);
 
 #endif
 }
@@ -104,12 +126,11 @@ void HardwareArduino::begin(){
 //!*****************************************************************************
 void HardwareArduino::IO_Write(PinNames pinname, uint8_t state)
 {
-
-    uint8_t pinnumber = get_pinnumber(pinname);
+    PinName pinnumber = get_pinnumber(pinname);
 #if ARDUINO_FUNC
 	digitalWrite(pinnumber, state);
 #else
-
+	DigitalOut output_pin(pinnumber, state);
 #endif
 }
 
@@ -128,16 +149,26 @@ void HardwareArduino::IO_Write(PinNames pinname, uint8_t state)
 //!*****************************************************************************
 void HardwareArduino::IO_PinMode(PinNames pinname, PinMode mode)
 {
-    uint8_t pinnumber = get_pinnumber(pinname);
+    PinName pinnumber = get_pinnumber(pinname);
     switch (mode) {
     case out:
-        //pinMode(pinnumber, OUTPUT);
+        // pinMode(pinnumber, OUTPUT);
+        {
+            DigitalOut output_pin(pinnumber, 1);
+        }
         break;
     case in_pullup:
-        //pinMode(pinnumber, INPUT_PULLUP);
+        // pinMode(pinnumber, INPUT_PULLUP);
+        {
+            DigitalIn input_pin(pinnumber);
+            input_pin.mode(PullUp);
+        }
         break;
     case in:
-        //pinMode(pinnumber, INPUT);
+        // pinMode(pinnumber, INPUT);
+        {
+            DigitalIn output_pin(pinnumber);
+        }
         break;
     }
 }
@@ -159,6 +190,7 @@ void HardwareArduino::Serial_Write(char const * buf)
 #if ARDUINO_FUNC
 	Serial.println(buf);
 #else
+	printf("%s, buf : %s\n", __func__, buf);
 #endif
 }
 
@@ -211,7 +243,7 @@ void HardwareArduino::SPI_Write(uint8_t channel, uint8_t * data, uint8_t length)
 
 
     for(int i = 0; i<length; i++){
-        //data[i] = SPI.transfer(data[i]);
+        data[i] = IOLINK_spi->write(data[i]);
     }
 
     // Disable chipselect -> output high (low-active)
@@ -248,37 +280,39 @@ void HardwareArduino::wait_for(uint32_t delay_ms)
 //!  \return       the hardware-pinnumber
 //!
 //!*****************************************************************************
-uint8_t HardwareArduino::get_pinnumber(PinNames pinname)
+PinName HardwareArduino::get_pinnumber(PinNames pinname)
 {
 	switch (pinname) {
-		case port01CS:		return 10u;
-		case port23CS:		return 4u;
-		case port01IRQ:		return 5u;
-		case port23IRQ:		return 11u;
-		case port0DI:		return 55u;
-		case port1DI:		return 54u;
-		case port2DI:		return 14u;
-		case port3DI:		return 15u;
+		case port01CS:		return PB_12;	// SPI0_cs0
+		case port01IRQ:		return PD_0;	// empty D port pin number
 
-		case port0LedGreen: return 2u;
-		case port0LedRed:	return 3u;
-		case port0LedRxErr:	return 61u;
-		case port0LedRxRdy:	return 60u;
+		case port23CS:		return PC_0;
+		case port23IRQ:		return PC_2;
+		case port0DI:		return PC_3;
+		case port1DI:		return PC_8;
+		case port2DI:		return PC_9;
+		case port3DI:		return PC_10;
 
-		case port1LedGreen: return 56u;
-		case port1LedRed:	return 57u;
-		case port1LedRxErr:	return 58u;
-		case port1LedRxRdy:	return 59u;
+		case port0LedGreen: return PC_11;
+		case port0LedRed:	return PC_11;
+		case port0LedRxErr:	return PC_11;
+		case port0LedRxRdy:	return PC_11;
 
-		case port2LedGreen: return 6u;
-		case port2LedRed:	return 7u;
-		case port2LedRxErr:	return 9u;
-		case port2LedRxRdy:	return 8u;
+		case port1LedGreen: return PC_11;
+		case port1LedRed:	return PC_11;
+		case port1LedRxErr:	return PC_11;
+		case port1LedRxRdy:	return PC_11;
 
-		case port3LedGreen: return 71u;
-		case port3LedRed:	return 70u;
-		case port3LedRxErr:	return 13u;
-		case port3LedRxRdy:	return 12u;
+		case port2LedGreen: return PC_11;
+		case port2LedRed:	return PC_11;
+		case port2LedRxErr:	return PC_11;
+		case port2LedRxRdy:	return PC_11;
+
+		case port3LedGreen: return PC_11;
+		case port3LedRed:	return PC_11;
+		case port3LedRxErr:	return PC_11;
+		case port3LedRxRdy:	return PC_11;
+
 	}
-	return uint8_t();
+	return PinName();
 }
