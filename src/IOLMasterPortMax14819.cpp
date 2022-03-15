@@ -137,7 +137,7 @@ uint8_t IOLMasterPortMax14819::begin() {
     // Generate wakeup
     retValue = uint8_t(retValue | pDriver_->wakeUpRequest(port_, &comSpeed_ ));
    if(retValue == custom::ERROR){
-       printf("Error wakeup driver01 PortA\n");
+       printf("Error wakeup driver01 PortA!!\n");
    }
    else{
        sprintf(buf, "Communication established with %d bauds\n", comSpeed_);// TODO:
@@ -147,15 +147,21 @@ uint8_t IOLMasterPortMax14819::begin() {
        // TODO: Serial.print(" Baud/s \n");
    }
     pDriver_->Serial_Write("Device");
-   uint8_t pData[3];
+   uint8_t pData[10];
    uint16_t VendorID;
    uint32_t DeviceID;
    readDirectParameterPage(0x02, pData);
 
-   // VendorID
+   // VendorID // product Name
+#if 0
    readDirectParameterPage(0x07, pData); //MSB
    readDirectParameterPage(0x08, pData+1); //LSB
    VendorID = uint16_t((pData[0] << 8) + pData[1]);
+#endif
+   readDirectParameterPage(0x18, pData);     // MSB
+   readDirectParameterPage(0x19, pData + 1); // LSB
+   VendorID = uint16_t((pData[0] << 8) + pData[1]);
+
    // DeviceID
    readDirectParameterPage(0x09, pData); //MSB
    readDirectParameterPage(0x0A, pData+1);

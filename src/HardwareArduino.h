@@ -64,6 +64,8 @@ public:
 	virtual void SPI_Write(uint8_t channel, uint8_t * data, uint8_t length);
 
 	virtual void wait_for(uint32_t delay_ms);
+
+	void set_pin_mode(PinName &src_pin_name, PinMode input_mode);
     SPI *IOLINK_spi;
 	DigitalOut *IOLINK_spi_cs;
 

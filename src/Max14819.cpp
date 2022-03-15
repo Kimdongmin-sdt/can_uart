@@ -284,7 +284,7 @@ uint8_t Max14819::begin(PortSelect port) {
         shadowReg = readRegister(LEDCtrl);
         retValue = uint8_t(retValue | writeRegister(LEDCtrl, RxRdyEnA | RxErrEnA | shadowReg));
         // Initialize the Channel A register
-        retValue = uint8_t(retValue | writeRegister(LCnfgA, LRT0 | LBL0 | LBL1 | LClimDis | LEn)); // Enable current retry 0.4s,  disable currentlimiting, enable Current
+        retValue = uint8_t(retValue | writeRegister(LCnfgA, LRT0 | LBL0 | LBL1 | LClimDis | LEn)); // Enable current retry 0.4s,  disable currentlimiting, enable Current, LEn
         retValue = uint8_t(retValue | writeRegister(CQCfgA, SinkSel0 | PushPul)); // Int Current Sink, 5 mA, PushPull, Channel Enable
         break;
     case PORTB:
@@ -464,14 +464,20 @@ uint8_t Max14819::wakeUpRequest(PortSelect port, uint32_t * comSpeed_ret) {
         retValue = uint8_t(retValue | writeRegister(CQCtrlA, EstCom));     // Start communication
 
         // Wait till establish communication sequence is over or timeout is reached
+#if 0
         do {
             comReqRunning = readRegister(CQCtrlA);
             comReqRunning &= EstCom;
             timeOutCounter++;
             Hardware->wait_for(1);
         } while (comReqRunning || (timeOutCounter < INIT_WURQ_TIMEOUT));
-
-		Hardware->wait_for(10);
+#endif
+        //} while (comReqRunning || (timeOutCounter < INIT_WURQ_TIMEOUT));
+        comReqRunning = readRegister(CQCtrlA);
+        comReqRunning &= EstCom;
+        timeOutCounter++;
+        Hardware->wait_for(1);
+        Hardware->wait_for(10);
         // Clear buffer
         length = readRegister(RxFIFOLvlA);
         for (uint8_t i = 0; i < length; i++) {
@@ -493,14 +499,20 @@ uint8_t Max14819::wakeUpRequest(PortSelect port, uint32_t * comSpeed_ret) {
         retValue = uint8_t(retValue | writeRegister(CQCtrlB, EstCom));     // Start communication
 
         // Wait till establish communication sequence is over or timeout is reached
+#if 0
         do {
             comReqRunning = readRegister(CQCtrlB);
             comReqRunning &= EstCom;
             timeOutCounter++;
 			Hardware->wait_for(1);
         } while (comReqRunning || (timeOutCounter < INIT_WURQ_TIMEOUT));
+#endif
+        comReqRunning = readRegister(CQCtrlB);
+        comReqRunning &= EstCom;
+        timeOutCounter++;
+        Hardware->wait_for(1);
 
-		Hardware->wait_for(10);
+        Hardware->wait_for(10);
         // Clear buffer
        length = readRegister(RxFIFOLvlB);
         for (uint8_t i = 0; i < length; i++) {
@@ -511,6 +523,7 @@ uint8_t Max14819::wakeUpRequest(PortSelect port, uint32_t * comSpeed_ret) {
         comSpeedRegB = readRegister(CQCtrlB) & (ComRt0 | ComRt1);
         comSpeed = comSpeedRegB;
         if (comSpeed == 0) {
+            printf("comSpeed is no 0\n");
             return custom::ERROR;
         }
         break;
@@ -584,12 +597,11 @@ uint8_t Max14819::readRegister(uint8_t reg) {
     } // switch(driver)
 
     // Predefine buffer
-    buf[0] = reg;
+    buf[0] = reg;sk1
     buf[1] = 0x00;
 
     // Send the device the register you want to read:
     Hardware->SPI_Write(channel, buf, 2);
-
     // Return Registervalue
     return buf[1];
 }
@@ -745,6 +757,7 @@ uint8_t Max14819::writeData(uint8_t mc, uint8_t sizeData, uint8_t *pData, uint8_
     } // switch(port)
 
     // Write message to max14819 FIFO
+    // page 28 in 14819 doc.
     retValue = uint8_t(retValue | writeRegister(bufferRegister, sizeAnswer)); // number of bytes for answer
     retValue = uint8_t(retValue | writeRegister(bufferRegister, uint8_t(sizeData + 2))); // number of bytes to send including master command and checksum
     retValue = uint8_t(retValue | writeRegister(bufferRegister, mc)); // begin of message, master command

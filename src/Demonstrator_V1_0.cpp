@@ -76,15 +76,16 @@ void Demo_setup(HardwareBase *hardware_loc)
 	port2 = IOLMasterPortMax14819(pDriver23, max14819::PORT2PORT);
 	port3 = IOLMasterPortMax14819(pDriver23, max14819::PORT3PORT);
 
-	BUS0023 = BalluffBus0023(&port0);
+	BUS0023 = BalluffBus0023(&port1);
 
     // Start IO-Link communication
 	BUS0023.begin();
     //port0.begin();
-    port1.begin();
+    port0.begin();
+#if 0
     port2.begin();
     port3.begin();
-
+#endif
 }
 
 // The loop function is called in an endless loop
