@@ -124,6 +124,11 @@ uint16_t BalluffBus0023::readDistance() {
 	if(port->readPD(data, 4)!= ERROR){
 		distance = (uint16_t)(((data[1] << 8) | data[2]) >> 1);
 	}
+
+	for (int i = 0; i < 4; i++) {
+		printf("data[%d] : %d\t", i, data[i]);
+	}
+
 	return distance;
 }
 

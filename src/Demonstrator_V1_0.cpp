@@ -50,7 +50,9 @@ IOLMasterPortMax14819 port0;
 IOLMasterPortMax14819 port1;
 IOLMasterPortMax14819 port2;
 IOLMasterPortMax14819 port3;
+#if 0
 BalluffBus0023 BUS0023;
+#endif
 HardwareBase * hardware;
 //!**** Function prototypes ****************************************************
 void printDataMatlab(uint16_t level, uint32_t measureNr);
@@ -75,13 +77,13 @@ void Demo_setup(HardwareBase *hardware_loc)
 	port1 = IOLMasterPortMax14819(pDriver01, max14819::PORT1PORT);
 	port2 = IOLMasterPortMax14819(pDriver23, max14819::PORT2PORT);
 	port3 = IOLMasterPortMax14819(pDriver23, max14819::PORT3PORT);
-
-	BUS0023 = BalluffBus0023(&port1);
-
+#if 0
+    BUS0023 = BalluffBus0023(&port1);
+#endif
     // Start IO-Link communication
-	BUS0023.begin();
+	//BUS0023.begin();
     //port0.begin();
-    port0.begin();
+    port1.begin();
 #if 0
     port2.begin();
     port3.begin();
@@ -116,18 +118,23 @@ void Demo_loop()
 	uint16_t TANK_MAX_LVL = 210;
 	uint16_t TANK_WARNING_LVL = 100;
 	uint32_t measureNr = 0;
-	constexpr uint16_t TANK_EMPTY_LVL = 50;
-
-
-    while(1){
+    constexpr uint16_t TANK_EMPTY_LVL = 50;
+    while (1) {
         hardware->wait_for(100);
         // Read process data and convert them if there is no error
-		distance = BUS0023.readDistance();
+        constexpr int input_data_size = 20;
+        uint8_t data[input_data_size];
+        uint16_t distance = 0;
+        if (port1.readPD(data, input_data_size) != ERROR) {
+            //distance = (uint16_t)(((data[1] << 8) | data[2]) >> 1);
+        }
+
+		//distance = BUS0023.readDistance();
 		hardware->Serial_Write("Messung");
 		sprintf(buf, "%d", distance);
 		hardware->Serial_Write(buf);
+#if 0
 		level = (uint16_t)(500 - distance / 10);
-
         // When there is a valid level
         if((level < 250) && (level > 0)){
             //Serial.println(level);
@@ -183,7 +190,9 @@ void Demo_loop()
                dataLED[7] = 0;						// Buzzer Volume zero
            }
             port1.writePD(10, dataLED, 2, IOL::M_TYPE_2_X);
+#endif
         }
+#if 0
         port2.readPD(data, 3);
         //Serial.println(data[2]&0x01, DEC);
         if((data[2]&0x01)== 1){
@@ -198,6 +207,7 @@ void Demo_loop()
                 TANK_WARNING_LVL = level;
          }
     }
+#endif
 }
 
 void printDataMatlab(uint16_t level, uint32_t measureNr) {

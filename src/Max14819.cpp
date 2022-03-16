@@ -29,7 +29,6 @@
 
 //!**** Header-Files ************************************************************
 #include "IOLMasterPort.h"
-
 #include "Max14819.h"
 
 #ifdef ARDUINO
@@ -496,23 +495,20 @@ uint8_t Max14819::wakeUpRequest(PortSelect port, uint32_t * comSpeed_ret) {
         retValue = uint8_t(retValue | writeRegister(IOStCfgB, 0)); // Disable tx needed for wake up
         retValue = uint8_t(retValue | writeRegister(ChanStatB, FramerEn)); // Enable Chanb Framer
         retValue = uint8_t(retValue | writeRegister(MsgCtrlB, 0)); // Dont use InsChks when transmit OD Data, max14819 doesnt calculate it right
+        retValue = uint8_t(retValue | writeRegister(CQCtrlB, 0x00));
         retValue = uint8_t(retValue | writeRegister(CQCtrlB, EstCom));     // Start communication
 
         // Wait till establish communication sequence is over or timeout is reached
-#if 0
+#if 1
         do {
             comReqRunning = readRegister(CQCtrlB);
             comReqRunning &= EstCom;
             timeOutCounter++;
 			Hardware->wait_for(1);
-        } while (comReqRunning || (timeOutCounter < INIT_WURQ_TIMEOUT));
+        } while (!comReqRunning);
+//        } while (comReqRunning || (timeOutCounter < INIT_WURQ_TIMEOUT));
 #endif
-        comReqRunning = readRegister(CQCtrlB);
-        comReqRunning &= EstCom;
-        timeOutCounter++;
-        Hardware->wait_for(1);
-
-        Hardware->wait_for(10);
+        printf("comReqRunning : %d\n", comReqRunning);
         // Clear buffer
        length = readRegister(RxFIFOLvlB);
         for (uint8_t i = 0; i < length; i++) {
@@ -523,7 +519,6 @@ uint8_t Max14819::wakeUpRequest(PortSelect port, uint32_t * comSpeed_ret) {
         comSpeedRegB = readRegister(CQCtrlB) & (ComRt0 | ComRt1);
         comSpeed = comSpeedRegB;
         if (comSpeed == 0) {
-            printf("comSpeed is no 0\n");
             return custom::ERROR;
         }
         break;
@@ -597,10 +592,10 @@ uint8_t Max14819::readRegister(uint8_t reg) {
     } // switch(driver)
 
     // Predefine buffer
-    buf[0] = reg;sk1
+    buf[0] = reg;
     buf[1] = 0x00;
-
     // Send the device the register you want to read:
+    printf("%s !!\n", __func__);
     Hardware->SPI_Write(channel, buf, 2);
     // Return Registervalue
     return buf[1];
@@ -655,7 +650,7 @@ uint8_t Max14819::writeRegister(uint8_t reg, uint8_t data) {
     Hardware->SPI_Write(channel, buf, 2);
 
     // Return Error state
-    return retValue;;
+    return retValue;
 }
 
 //!******************************************************************************
@@ -800,29 +795,32 @@ uint8_t Max14819::readData(uint8_t *pData, uint8_t sizeData, PortSelect port) {
     uint8_t bufferRegister;
     uint8_t retValue = custom::SUCCESS;
     // Use corresponding transmit FIFO address
-    switch(port){
+    switch (port) {
     case PORTA:
         bufferRegister = TxRxDataA;
         break;
     case PORTB:
         bufferRegister = TxRxDataB;
-            break;
+        break;
     default:
         retValue = custom::ERROR;
         bufferRegister = 0;
         break;
     } // switch(port)
 
+    int read_cnt;
     // Controll if the aswer has the expected length (first byte in the FIFO is the messagelength)
-    if (sizeData != readRegister(bufferRegister)) {
+    if (sizeData != (read_cnt = readRegister(bufferRegister))) {
         // TODO Error Handling if Buffer is corrupted
         retValue = custom::ERROR;
     }
 
+    printf("read_cnt from SDO : %d\n", read_cnt);
     // Read data from FIFO
     for (uint8_t i = 0; i < sizeData; i++) {
-        *pData++ = readRegister(bufferRegister);
+        pData[i] = readRegister(bufferRegister);
     }
+
     // Return Error state
     return retValue;
 }

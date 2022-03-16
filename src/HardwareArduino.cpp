@@ -230,22 +230,25 @@ void HardwareArduino::Serial_Write(int number)
 //!*****************************************************************************
 void HardwareArduino::SPI_Write(uint8_t channel, uint8_t * data, uint8_t length)
 {
-    switch(channel){
-        case 0:
-            // Enable chipselect -> output high (low-active)
-            IO_Write(port01CS, 0);
-            break;
-        case 1:
-            // Enable chipselect -> output high (low-active)
-            IO_Write(port23CS, 0);
-            break;
+    switch (channel) {
+    case 0:
+        // Enable chipselect -> output high (low-active)
+        IO_Write(port01CS, 0);
+        break;
+    case 1:
+        // Enable chipselect -> output high (low-active)
+        IO_Write(port23CS, 0);
+        break;
     }
 
-
-    for(int i = 0; i<length; i++){
+    printf("send, data[0] : 0x%02x,\t data[1] : 0x%02x\n", (data[0]), data[1]);
+    for (int i = 0; i < length; i++) {
         data[i] = IOLINK_spi->write(data[i]);
     }
 
+    printf("recv, data[0] : 0x%02x,\t data[1] : 0x%02x\n", (data[0]), (data[1]));
+
+    ThisThread::sleep_for(50ms);
     // Disable chipselect -> output high (low-active)
     IO_Write(port01CS, 1);
     IO_Write(port23CS, 1);

@@ -1,7 +1,6 @@
 #include "mbed.h"
 #include "src/Demonstrator_V1_0.h"
 #include "src/HardwareArduino.h"
-
 HardwareArduino hardware_loc;
 
 int main(void)

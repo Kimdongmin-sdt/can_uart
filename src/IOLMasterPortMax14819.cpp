@@ -152,22 +152,19 @@ uint8_t IOLMasterPortMax14819::begin() {
    uint32_t DeviceID;
    readDirectParameterPage(0x02, pData);
 
-   // VendorID // product Name
-#if 0
+   // VendorID
+#if 1
    readDirectParameterPage(0x07, pData); //MSB
    readDirectParameterPage(0x08, pData+1); //LSB
    VendorID = uint16_t((pData[0] << 8) + pData[1]);
 #endif
-   readDirectParameterPage(0x18, pData);     // MSB
-   readDirectParameterPage(0x19, pData + 1); // LSB
-   VendorID = uint16_t((pData[0] << 8) + pData[1]);
 
    // DeviceID
    readDirectParameterPage(0x09, pData); //MSB
    readDirectParameterPage(0x0A, pData+1);
    readDirectParameterPage(0x0B, pData+2); //LSB
    DeviceID = (pData[0] << 16) + (pData[1] << 8) + pData[2];
-   sprintf(buf, "Vendor ID: %d, Device ID: %d\n", VendorID, DeviceID);
+   printf("Vendor ID: 0x%04x, Device ID: 0x%04x\n", VendorID, DeviceID);
    pDriver_->Serial_Write(buf);
 
     // Switch to operational
@@ -379,10 +376,16 @@ uint8_t IOLMasterPortMax14819::readPD(uint8_t *pData, uint8_t sizeData) {
 	pDriver_->wait_for(10);
 
     // Receive answer
-    retValue = uint8_t(retValue | pDriver_->readData(pData,  4,  port_));
-    if((pData[3]&IOL::PD_VALID_BIT) != 0){
+    retValue = uint8_t(retValue | pDriver_->readData(pData, sizeData, port_));
+    if((pData[sizeData - 1]&IOL::PD_VALID_BIT) != 0){
 		retValue = custom::ERROR;
 	}
+
+    for (int i = 0; i < sizeData; i++) {
+        printf("pData[%2d] : 0x%02x\n", i, pData[i]);
+    }
+
+    putchar('\n');
     return retValue;
 }
 
