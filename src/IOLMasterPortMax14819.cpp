@@ -147,7 +147,7 @@ uint8_t IOLMasterPortMax14819::begin() {
        // TODO: Serial.print(" Baud/s \n");
    }
     pDriver_->Serial_Write("Device");
-   uint8_t pData[10];
+   uint8_t pData[3];
    uint16_t VendorID;
    uint32_t DeviceID;
    readDirectParameterPage(0x02, pData);
@@ -164,7 +164,7 @@ uint8_t IOLMasterPortMax14819::begin() {
    readDirectParameterPage(0x0A, pData+1);
    readDirectParameterPage(0x0B, pData+2); //LSB
    DeviceID = (pData[0] << 16) + (pData[1] << 8) + pData[2];
-   printf("Vendor ID: 0x%04x, Device ID: 0x%04x\n", VendorID, DeviceID);
+   printf("Vendor ID: 0x%06x, Device ID: 0x%08x\n", VendorID, DeviceID);
    pDriver_->Serial_Write(buf);
 
     // Switch to operational

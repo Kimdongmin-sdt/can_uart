@@ -30,7 +30,8 @@
 #define _HARDWARARDUINO_H
 
 #define ARDUINO_FUNC 	0
-#define SPI_FREQUENCY 	20000000
+//#define SPI_FREQUENCY 	20000000
+#define SPI_FREQUENCY 500000
 //!**** Header-Files ************************************************************
 #include "HardwareBase.h"
 #include "mbed_header.h"

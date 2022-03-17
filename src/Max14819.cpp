@@ -284,6 +284,7 @@ uint8_t Max14819::begin(PortSelect port) {
         retValue = uint8_t(retValue | writeRegister(LEDCtrl, RxRdyEnA | RxErrEnA | shadowReg));
         // Initialize the Channel A register
         retValue = uint8_t(retValue | writeRegister(LCnfgA, LRT0 | LBL0 | LBL1 | LClimDis | LEn)); // Enable current retry 0.4s,  disable currentlimiting, enable Current, LEn
+
         retValue = uint8_t(retValue | writeRegister(CQCfgA, SinkSel0 | PushPul)); // Int Current Sink, 5 mA, PushPull, Channel Enable
         break;
     case PORTB:
@@ -295,6 +296,12 @@ uint8_t Max14819::begin(PortSelect port) {
         retValue = uint8_t(retValue | writeRegister(LEDCtrl, RxRdyEnB | RxErrEnB | shadowReg));
         // Initialize the Channel A register
         retValue = uint8_t(retValue | writeRegister(LCnfgB, LRT0 | LBL0 | LBL1 | LClimDis | LEn)); // Enable current retry 0.4s,  disable currentlimiting, enable Current
+        {
+            int temp = readRegister(LCnfgB);
+            printf("LCnfgB1 : 0x%02x\n", LRT0 | LBL0 | LBL1 | LClimDis | LEn);
+            printf("LCnfgB2 : 0x%02x\n", temp);
+        }
+        //exit(1);
         retValue = uint8_t(retValue | writeRegister(CQCfgB, SinkSel0 | PushPul)); // Int Current Sink, 5 mA, PushPull, Channel Enable
         break;
     default:
@@ -497,20 +504,19 @@ uint8_t Max14819::wakeUpRequest(PortSelect port, uint32_t * comSpeed_ret) {
         retValue = uint8_t(retValue | writeRegister(MsgCtrlB, 0)); // Dont use InsChks when transmit OD Data, max14819 doesnt calculate it right
         retValue = uint8_t(retValue | writeRegister(CQCtrlB, 0x00));
         retValue = uint8_t(retValue | writeRegister(CQCtrlB, EstCom));     // Start communication
-
-        // Wait till establish communication sequence is over or timeout is reached
 #if 1
         do {
             comReqRunning = readRegister(CQCtrlB);
+             printf("read comReqRunning : %02x\n", comReqRunning);
             comReqRunning &= EstCom;
             timeOutCounter++;
 			Hardware->wait_for(1);
-        } while (!comReqRunning);
-//        } while (comReqRunning || (timeOutCounter < INIT_WURQ_TIMEOUT));
+        //} while (!comReqRunning);
+        } while (comReqRunning || (timeOutCounter < INIT_WURQ_TIMEOUT));
 #endif
         printf("comReqRunning : %d\n", comReqRunning);
         // Clear buffer
-       length = readRegister(RxFIFOLvlB);
+        length = readRegister(RxFIFOLvlB);
         for (uint8_t i = 0; i < length; i++) {
             readRegister(TxRxDataB);
         }
@@ -577,6 +583,7 @@ uint8_t Max14819::readRegister(uint8_t reg) {
     switch(driver_){
     case DRIVER01:
         // Mask read register with the read cmd and set spi address of the max14819
+        //reg = reg | (custom::read << 7) | (port01Address_temp << 5);
         reg = reg | (custom::read << 7) | (port01Address << 5);
         // Set channel to 0
         channel = 0;
@@ -630,6 +637,7 @@ uint8_t Max14819::writeRegister(uint8_t reg, uint8_t data) {
     case DRIVER01:
         // Set SPI address of the max14819
         reg |= (port01Address << 5);
+        //reg |= (port01Address_temp << 5);
         // Set channel to 0
         channel = 0;
         break;
