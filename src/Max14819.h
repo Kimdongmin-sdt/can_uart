@@ -24,7 +24,7 @@
 //!	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //!	 See the License for the specific language governing permissions and
 //!	 limitations under the License.
-//!	
+//!
 //!*****************************************************************************
 #ifndef MAX14819_H_INCLUDED
 #define MAX14819_H_INCLUDED
@@ -33,11 +33,16 @@
 
 //!**** Header-Files **********************************************************
 #include "HardwareBase.h"
+#include "mbed_header.h"
 //!**** Macros ****************************************************************
 // Error define
-constexpr uint8_t ERROR             = 1u;
-constexpr uint8_t SUCCESS           = 0u;
-
+namespace custom
+{
+constexpr uint8_t ERROR		 = 1u;
+constexpr uint8_t SUCCESS	 = 0u;
+constexpr uint8_t read		 = 0b00000001;
+constexpr uint8_t write		 = 0b01111111;
+} // namespace custom
 
 namespace max14819 {
 	// MAX14819 driver enum
@@ -76,6 +81,7 @@ namespace max14819 {
 	constexpr uint32_t INIT_WURQ_TIMEOUT    = 80u;   // Timeout in ms for abort WURQ request (2x retry after 10ms, 3x tries a 20ms)
 
 	// IO-Link Master Shield Max14819 Address
+	constexpr uint8_t port01Address_temp  = 0b01;
 	constexpr uint8_t port01Address  = 0;
 	constexpr uint8_t port23Address  = 2;
 

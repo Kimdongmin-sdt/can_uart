@@ -24,14 +24,14 @@
 //!	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //!	 See the License for the specific language governing permissions and
 //!	 limitations under the License.
-//!	
+//!
 //!*****************************************************************************
 #ifndef BALLUFFBUS0023_H_INCLUDED
 #define BALLUFFBUS0023_H_INCLUDED
 
 //!**** Header-Files ***********************************************************
 #include "IOLGenericDevice.h"
-
+#include "mbed_header.h"
 //!**** Macros *****************************************************************
 
 //!**** Data types *************************************************************
@@ -46,7 +46,7 @@ class BalluffBus0023: public IOLGenericDevice {
 public:
 	BalluffBus0023();
 	BalluffBus0023(IOLMasterPort * port);
-    
+
 	void begin();
 
 	void end();

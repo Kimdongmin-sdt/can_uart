@@ -30,6 +30,7 @@ extern "C" {
 /* If this macro is defined, then constexpr utility functions for pin-map seach can be used. */
 #define STATIC_PINMAP_READY 1
 
+
 typedef enum {
     ALT0  = 0x100,
     ALT1  = 0x200,
@@ -221,10 +222,10 @@ typedef enum {
     ARDUINO_UNO_D7  = PF_13,
     ARDUINO_UNO_D8  = PF_12,
     ARDUINO_UNO_D9  = PD_15,
-    ARDUINO_UNO_D10 = PD_14,
-    ARDUINO_UNO_D11 = STM32_D11_SPI_ETHERNET_PIN,
-    ARDUINO_UNO_D12 = PA_6,
-    ARDUINO_UNO_D13 = PA_5,
+    ARDUINO_UNO_D10 = PD_14,                        //  CS
+    ARDUINO_UNO_D11 = STM32_D11_SPI_ETHERNET_PIN,   //  MOSI
+    ARDUINO_UNO_D12 = PA_6,                         //  MISO
+    ARDUINO_UNO_D13 = PA_5,                         //  SCK
     ARDUINO_UNO_D14 = PB_9,
     ARDUINO_UNO_D15 = PB_8,
 #endif

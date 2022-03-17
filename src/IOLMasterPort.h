@@ -1,10 +1,11 @@
 
 //!*****************************************************************************
-//!  \file      IOLMasterPortMax14819.h
+//!  \file      IOLMasterPort.h
 //!*****************************************************************************
 //!
-//!  \brief		Implementation of IOMasterPort class for the driver IC Maxim
-//!             MAX14819. Extends IOMasterPort class.
+//!  \brief		Abstract class layer for driver ic independent port
+//!             implementation. Defines methods and variables for the
+//!             IOLMasterPort<driver_ic> implementation.
 //!
 //!  \author    Pascal Frei (freip2)
 //!
@@ -25,16 +26,16 @@
 //!	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //!	 See the License for the specific language governing permissions and
 //!	 limitations under the License.
-//!	
+//!
 //!*****************************************************************************
-#ifndef IOLMASTERPORTMAX14819_H_INCLUDED
-#define IOLMASTERPORTMAX14819_H_INCLUDED
+#ifndef IOLMASTERPORT_H_INCLUDED
+#define IOLMASTERPORT_H_INCLUDED
 
 //!***** Header-Files ***********************************************************
-#include "IOLMasterPort.h"
 #include "Max14819.h"
 
-#include <stdint.h>
+#include <cstdint>
+#include "mbed_header.h"
 //!***** Macros *****************************************************************
 
 //!***** Data types *************************************************************
@@ -45,56 +46,55 @@
 
 //!***** Implementation *********************************************************
 
-class IOLMasterPortMax14819: public IOLMasterPort{
+class IOLMasterPort {
 private:
-    max14819::Max14819* pDriver_;
-    max14819::PortSelect port_;
     uint16_t portType_;
     uint16_t diModeSupport_;
     uint16_t portMode_;
     uint16_t portStatus_;
     uint16_t actualCycleTime_;
-    uint32_t comSpeed_;
-public: 
-    IOLMasterPortMax14819();
+    uint16_t comSpeed_;
+public:
 
-    IOLMasterPortMax14819(max14819::Max14819* pDriver, max14819::PortSelect port);
+    IOLMasterPort();
 
-    ~IOLMasterPortMax14819();
-    
-    uint8_t begin();
+    virtual ~IOLMasterPort();
 
-    uint8_t end();
+    virtual uint8_t begin() = 0;
 
-	void portHandler();
+    virtual uint8_t end() = 0;
 
-	void readStatus();
+    virtual void portHandler() = 0;
 
-	void sendMCmd();
+    virtual void readStatus() = 0;
 
-	uint32_t readComSpeed();
+    virtual void sendMCmd() = 0;
 
-	void readPage();
+    virtual uint32_t readComSpeed() = 0;
 
-	void writePage();
+    virtual void readPage() = 0;
 
-	void readISDU();
+    virtual void writePage() = 0;
 
-	void writeISDU();
+    virtual void readISDU() = 0;
 
-	uint8_t readDirectParameterPage(uint8_t address, uint8_t *pData);
+    virtual void writeISDU() = 0;
 
-	uint8_t readPD(uint8_t *pData, uint8_t sizeData);
+	virtual uint8_t readDirectParameterPage(uint8_t address, uint8_t *pData) = 0;
 
-	uint8_t writePD(uint8_t sizeData, uint8_t *pData, uint8_t sizeAnswer, uint8_t mSeqType);
+    virtual uint8_t readPD(uint8_t *pData, uint8_t sizeData) = 0;
 
-	void readDI();
+    virtual uint8_t writePD(uint8_t sizeData, uint8_t *pData, uint8_t sizeAnswer, uint8_t mSeqType) = 0;
 
-	void readCQ();
+    virtual void readDI() = 0;
 
-	void writeCQ();
+    virtual void readCQ() = 0;
 
-	void isDeviceConnected();
+    virtual void writeCQ() = 0;
+
+    virtual void isDeviceConnected() = 0;
+
+
 };
 
-#endif //IOLMASTERPORTMAX14819_H_INCLUDED
+#endif //IOLMASTERPORT_H_INCLUDED

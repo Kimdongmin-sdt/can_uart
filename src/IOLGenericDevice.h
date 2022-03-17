@@ -24,13 +24,14 @@
 //!	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //!	 See the License for the specific language governing permissions and
 //!	 limitations under the License.
-//!	
+//!
 //!*****************************************************************************
 #ifndef _IOLGENERICDEVICE_H
 #define _IOLGENERICDEVICE_H
 
 //!**** Header-Files ************************************************************
 #include "IOLMasterPort.h"
+#include "mbed_header.h"
 
 #include <cstdint>
 //!**** Macros ******************************************************************
@@ -44,9 +45,9 @@
 //!**** Implementation **********************************************************
 
 class IOLGenericDevice {
-public: 
+public:
 	IOLGenericDevice(IOLMasterPort * port);
-    
+
 	void begin();
 
 	void end();
@@ -116,9 +117,9 @@ public:
 	void readVendorID();
 
 	void readDeviceID();
-    
+
 	void readFunctionID();
-protected: 
+protected:
     uint16_t minCyclteTime;
     uint16_t deviceType;
     uint16_t diModeSupoort;

@@ -24,12 +24,11 @@
 //!	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //!	 See the License for the specific language governing permissions and
 //!	 limitations under the License.
-//!	
+//!
 //!*****************************************************************************
 
 //!**** Header-Files ************************************************************
 #include "IOLMasterPort.h"
-
 #include "Max14819.h"
 
 #ifdef ARDUINO
@@ -38,13 +37,12 @@
 #else
     #include <cstdint>
 	#include <cstdio>
-#endif	
+#endif
 
 #include <stdio.h>
 
 //!**** Macros ******************************************************************
-constexpr uint8_t read = 0b00000001;
-constexpr uint8_t write = 0b01111111;
+
 
 #define LOW 0
 #define HIGH 1
@@ -136,7 +134,7 @@ Max14819::~Max14819() {
 //!
 //!******************************************************************************
 uint8_t Max14819::begin(PortSelect port) {
-    uint8_t retValue = SUCCESS;
+    uint8_t retValue = custom::SUCCESS;
     uint8_t shadowReg = 0;
 
     switch (driver_) {
@@ -196,7 +194,7 @@ uint8_t Max14819::begin(PortSelect port) {
                 isInitPortB_ = 1;
                 break;
             default:
-                retValue = ERROR;
+                retValue = custom::ERROR;
                 break;
             } // switch(port
         } // switch
@@ -256,13 +254,13 @@ uint8_t Max14819::begin(PortSelect port) {
             isInitPortB_ = 1;
             break;
         default:
-            retValue = ERROR;
+            retValue = custom::ERROR;
             break;
         } // switch(port)
 
         break;
     default:
-        retValue = ERROR;
+        retValue = custom::ERROR;
         break;
     } // switch(driver)
 
@@ -285,7 +283,8 @@ uint8_t Max14819::begin(PortSelect port) {
         shadowReg = readRegister(LEDCtrl);
         retValue = uint8_t(retValue | writeRegister(LEDCtrl, RxRdyEnA | RxErrEnA | shadowReg));
         // Initialize the Channel A register
-        retValue = uint8_t(retValue | writeRegister(LCnfgA, LRT0 | LBL0 | LBL1 | LClimDis | LEn)); // Enable current retry 0.4s,  disable currentlimiting, enable Current
+        retValue = uint8_t(retValue | writeRegister(LCnfgA, LRT0 | LBL0 | LBL1 | LClimDis | LEn)); // Enable current retry 0.4s,  disable currentlimiting, enable Current, LEn
+
         retValue = uint8_t(retValue | writeRegister(CQCfgA, SinkSel0 | PushPul)); // Int Current Sink, 5 mA, PushPull, Channel Enable
         break;
     case PORTB:
@@ -297,10 +296,16 @@ uint8_t Max14819::begin(PortSelect port) {
         retValue = uint8_t(retValue | writeRegister(LEDCtrl, RxRdyEnB | RxErrEnB | shadowReg));
         // Initialize the Channel A register
         retValue = uint8_t(retValue | writeRegister(LCnfgB, LRT0 | LBL0 | LBL1 | LClimDis | LEn)); // Enable current retry 0.4s,  disable currentlimiting, enable Current
+        {
+            int temp = readRegister(LCnfgB);
+            printf("LCnfgB1 : 0x%02x\n", LRT0 | LBL0 | LBL1 | LClimDis | LEn);
+            printf("LCnfgB2 : 0x%02x\n", temp);
+        }
+        //exit(1);
         retValue = uint8_t(retValue | writeRegister(CQCfgB, SinkSel0 | PushPul)); // Int Current Sink, 5 mA, PushPull, Channel Enable
         break;
     default:
-        retValue = ERROR;
+        retValue = custom::ERROR;
         break;
     } // switch(port)
 
@@ -324,7 +329,7 @@ uint8_t Max14819::begin(PortSelect port) {
 //!
 //!******************************************************************************
 uint8_t Max14819::end(PortSelect port) {
-    uint8_t retValue = SUCCESS;
+    uint8_t retValue = custom::SUCCESS;
 
     // Reset max14819 registers
     retValue = reset(port);
@@ -340,7 +345,7 @@ uint8_t Max14819::end(PortSelect port) {
             Hardware->IO_Write(Hardware->port0LedRed, HIGH);
             break;
         default:
-        retValue = ERROR;
+        retValue = custom::ERROR;
         break;
     } // switch(port)
 
@@ -361,7 +366,7 @@ uint8_t Max14819::end(PortSelect port) {
 //!
 //!******************************************************************************
 uint8_t Max14819::reset(void) {
-    uint8_t retValue = SUCCESS;
+    uint8_t retValue = custom::SUCCESS;
     // Reset all max14819 registers
     retValue = writeRegister(ChanStatA, Rst);
     retValue = uint8_t(retValue | writeRegister(ChanStatB, Rst));
@@ -385,7 +390,7 @@ uint8_t Max14819::reset(void) {
 //!
 //!******************************************************************************
 uint8_t Max14819::reset(PortSelect port) {
-    uint8_t retValue = SUCCESS;
+    uint8_t retValue = custom::SUCCESS;
 
 // Reset all max14819 registers only for selected port
     if (port == PORTA) {
@@ -465,14 +470,20 @@ uint8_t Max14819::wakeUpRequest(PortSelect port, uint32_t * comSpeed_ret) {
         retValue = uint8_t(retValue | writeRegister(CQCtrlA, EstCom));     // Start communication
 
         // Wait till establish communication sequence is over or timeout is reached
+#if 0
         do {
             comReqRunning = readRegister(CQCtrlA);
             comReqRunning &= EstCom;
             timeOutCounter++;
             Hardware->wait_for(1);
         } while (comReqRunning || (timeOutCounter < INIT_WURQ_TIMEOUT));
-
-		Hardware->wait_for(10);
+#endif
+        //} while (comReqRunning || (timeOutCounter < INIT_WURQ_TIMEOUT));
+        comReqRunning = readRegister(CQCtrlA);
+        comReqRunning &= EstCom;
+        timeOutCounter++;
+        Hardware->wait_for(1);
+        Hardware->wait_for(10);
         // Clear buffer
         length = readRegister(RxFIFOLvlA);
         for (uint8_t i = 0; i < length; i++) {
@@ -483,7 +494,7 @@ uint8_t Max14819::wakeUpRequest(PortSelect port, uint32_t * comSpeed_ret) {
         comSpeedRegA = readRegister(CQCtrlA) & (ComRt0 | ComRt1);
         comSpeed = comSpeedRegA;
         if (comSpeed == 0) {
-            return ERROR;
+            return custom::ERROR;
         }
         break;
     case PORTB:
@@ -491,19 +502,21 @@ uint8_t Max14819::wakeUpRequest(PortSelect port, uint32_t * comSpeed_ret) {
         retValue = uint8_t(retValue | writeRegister(IOStCfgB, 0)); // Disable tx needed for wake up
         retValue = uint8_t(retValue | writeRegister(ChanStatB, FramerEn)); // Enable Chanb Framer
         retValue = uint8_t(retValue | writeRegister(MsgCtrlB, 0)); // Dont use InsChks when transmit OD Data, max14819 doesnt calculate it right
+        retValue = uint8_t(retValue | writeRegister(CQCtrlB, 0x00));
         retValue = uint8_t(retValue | writeRegister(CQCtrlB, EstCom));     // Start communication
-
-        // Wait till establish communication sequence is over or timeout is reached
+#if 1
         do {
             comReqRunning = readRegister(CQCtrlB);
+             printf("read comReqRunning : %02x\n", comReqRunning);
             comReqRunning &= EstCom;
             timeOutCounter++;
 			Hardware->wait_for(1);
+        //} while (!comReqRunning);
         } while (comReqRunning || (timeOutCounter < INIT_WURQ_TIMEOUT));
-
-		Hardware->wait_for(10);
+#endif
+        printf("comReqRunning : %d\n", comReqRunning);
         // Clear buffer
-       length = readRegister(RxFIFOLvlB);
+        length = readRegister(RxFIFOLvlB);
         for (uint8_t i = 0; i < length; i++) {
             readRegister(TxRxDataB);
         }
@@ -512,11 +525,11 @@ uint8_t Max14819::wakeUpRequest(PortSelect port, uint32_t * comSpeed_ret) {
         comSpeedRegB = readRegister(CQCtrlB) & (ComRt0 | ComRt1);
         comSpeed = comSpeedRegB;
         if (comSpeed == 0) {
-            return ERROR;
+            return custom::ERROR;
         }
         break;
     default:
-        retValue = ERROR;
+        retValue = custom::ERROR;
         break;
     } // switch(port)
 
@@ -539,10 +552,10 @@ uint8_t Max14819::wakeUpRequest(PortSelect port, uint32_t * comSpeed_ret) {
         *comSpeed_ret = 230400;
         break;
     default:
-		return ERROR;
+		return custom::ERROR;
         break;
     }
-    return SUCCESS;
+    return custom::SUCCESS;
 }
 
 //!******************************************************************************
@@ -564,19 +577,20 @@ uint8_t Max14819::readRegister(uint8_t reg) {
     // Check if register address is in the correct range
     if (reg > MAX_REG) {
         Hardware->Serial_Write("Registeraddress out of range");
-        return ERROR;
+        return custom::ERROR;
     }
 
     switch(driver_){
     case DRIVER01:
         // Mask read register with the read cmd and set spi address of the max14819
-        reg = reg | (read << 7) | (port01Address << 5);
+        //reg = reg | (custom::read << 7) | (port01Address_temp << 5);
+        reg = reg | (custom::read << 7) | (port01Address << 5);
         // Set channel to 0
         channel = 0;
         break;
     case DRIVER23:
         // Mask read register with the read cmd and set spiad dress of the max14819
-        reg = reg | (read << 7) | (port23Address << 5);
+        reg = reg | (custom::read << 7) | (port23Address << 5);
         // Set channel to 1
         channel = 1;
         break;
@@ -587,10 +601,9 @@ uint8_t Max14819::readRegister(uint8_t reg) {
     // Predefine buffer
     buf[0] = reg;
     buf[1] = 0x00;
-
     // Send the device the register you want to read:
+    printf("%s !!\n", __func__);
     Hardware->SPI_Write(channel, buf, 2);
-
     // Return Registervalue
     return buf[1];
 }
@@ -608,22 +621,23 @@ uint8_t Max14819::readRegister(uint8_t reg) {
 //!
 //!******************************************************************************
 uint8_t Max14819::writeRegister(uint8_t reg, uint8_t data) {
-    uint8_t retValue = SUCCESS;
+    uint8_t retValue = custom::SUCCESS;
     uint8_t buf[2];
     uint8_t channel = 0;
 
     // Check if register address is in the correct range
     if (reg > MAX_REG) {
         Hardware->Serial_Write("Registeraddress out of range");
-        return ERROR;
+        return custom::ERROR;
     }
     // Set write bit in register command
-    reg &= write;
+    reg &= custom::write;
 
     switch (driver_) {
     case DRIVER01:
         // Set SPI address of the max14819
         reg |= (port01Address << 5);
+        //reg |= (port01Address_temp << 5);
         // Set channel to 0
         channel = 0;
         break;
@@ -634,7 +648,7 @@ uint8_t Max14819::writeRegister(uint8_t reg, uint8_t data) {
         channel = 1;
         break;
     default:
-        retValue = ERROR;
+        retValue = custom::ERROR;
         break;
     }
 
@@ -644,7 +658,7 @@ uint8_t Max14819::writeRegister(uint8_t reg, uint8_t data) {
     Hardware->SPI_Write(channel, buf, 2);
 
     // Return Error state
-    return retValue;;
+    return retValue;
 }
 
 //!******************************************************************************
@@ -665,7 +679,7 @@ uint8_t Max14819::writeRegister(uint8_t reg, uint8_t data) {
 //!
 //!******************************************************************************
 uint8_t Max14819::writeData(uint8_t mc, uint8_t data, uint8_t sizeAnswer, uint8_t mSeqType, PortSelect port) {
-    uint8_t retValue = SUCCESS;
+    uint8_t retValue = custom::SUCCESS;
 
     uint8_t bufferRegister;
     // Use corresponding transmit FIFO address
@@ -678,7 +692,7 @@ uint8_t Max14819::writeData(uint8_t mc, uint8_t data, uint8_t sizeAnswer, uint8_
           break;
       default:
           bufferRegister = 0;
-          retValue = ERROR;
+          retValue = custom::ERROR;
           break;
       } // switch(port)
 
@@ -698,7 +712,7 @@ uint8_t Max14819::writeData(uint8_t mc, uint8_t data, uint8_t sizeAnswer, uint8_
         retValue = uint8_t(retValue | writeRegister(CQCtrlB, CQSend | comSpeedRegB));
         break;
     default:
-        retValue = ERROR;
+        retValue = custom::ERROR;
         break;
     } // switch(port)
 
@@ -723,11 +737,11 @@ uint8_t Max14819::writeData(uint8_t mc, uint8_t data, uint8_t sizeAnswer, uint8_
 //!
 //!******************************************************************************
 uint8_t Max14819::writeData(uint8_t mc, uint8_t sizeData, uint8_t *pData, uint8_t sizeAnswer, uint8_t mSeqType, PortSelect port) {
-    uint8_t retValue = SUCCESS;
+    uint8_t retValue = custom::SUCCESS;
 
     // Test if message is not too long
     if ((sizeData + 2) > MAX_MSG_LENGTH) { //include 1 byte masterc ommand and 1 byte for checksum
-        return ERROR;
+        return custom::ERROR;
     }
 
     uint8_t bufferRegister;
@@ -741,11 +755,12 @@ uint8_t Max14819::writeData(uint8_t mc, uint8_t sizeData, uint8_t *pData, uint8_
         break;
     default:
         bufferRegister = 0;
-        retValue = ERROR;
+        retValue = custom::ERROR;
         break;
     } // switch(port)
 
     // Write message to max14819 FIFO
+    // page 28 in 14819 doc.
     retValue = uint8_t(retValue | writeRegister(bufferRegister, sizeAnswer)); // number of bytes for answer
     retValue = uint8_t(retValue | writeRegister(bufferRegister, uint8_t(sizeData + 2))); // number of bytes to send including master command and checksum
     retValue = uint8_t(retValue | writeRegister(bufferRegister, mc)); // begin of message, master command
@@ -763,7 +778,7 @@ uint8_t Max14819::writeData(uint8_t mc, uint8_t sizeData, uint8_t *pData, uint8_
        retValue = uint8_t(retValue | writeRegister(CQCtrlB, CQSend | comSpeedRegB));
        break;
     default:
-       retValue = ERROR;
+       retValue = custom::ERROR;
     break;
    } // switch(port)
     // Return Error state
@@ -786,31 +801,34 @@ uint8_t Max14819::writeData(uint8_t mc, uint8_t sizeData, uint8_t *pData, uint8_
 //!******************************************************************************
 uint8_t Max14819::readData(uint8_t *pData, uint8_t sizeData, PortSelect port) {
     uint8_t bufferRegister;
-    uint8_t retValue = SUCCESS;
+    uint8_t retValue = custom::SUCCESS;
     // Use corresponding transmit FIFO address
-    switch(port){
+    switch (port) {
     case PORTA:
         bufferRegister = TxRxDataA;
         break;
     case PORTB:
         bufferRegister = TxRxDataB;
-            break;
+        break;
     default:
-        retValue = ERROR;
+        retValue = custom::ERROR;
         bufferRegister = 0;
         break;
     } // switch(port)
 
+    int read_cnt;
     // Controll if the aswer has the expected length (first byte in the FIFO is the messagelength)
-    if (sizeData != readRegister(bufferRegister)) {
+    if (sizeData != (read_cnt = readRegister(bufferRegister))) {
         // TODO Error Handling if Buffer is corrupted
-        retValue = ERROR;
+        retValue = custom::ERROR;
     }
 
+    printf("read_cnt from SDO : %d\n", read_cnt);
     // Read data from FIFO
     for (uint8_t i = 0; i < sizeData; i++) {
-        *pData++ = readRegister(bufferRegister);
+        pData[i] = readRegister(bufferRegister);
     }
+
     // Return Error state
     return retValue;
 }
@@ -834,7 +852,7 @@ uint8_t Max14819::readData(uint8_t *pData, uint8_t sizeData, PortSelect port) {
 //!
 //!******************************************************************************
 uint8_t Max14819::enableCyclicSend(uint8_t mc, uint8_t sizeData, uint8_t *pData,uint8_t sizeAnswer, uint8_t mSeqType, uint16_t cycleTime,PortSelect port) {
-    uint8_t retValue = SUCCESS;
+    uint8_t retValue = custom::SUCCESS;
 
     // Set cycleTime (use minCycleTime stored allready CyclTmrA/B when 0
     uint8_t cycleBase = 0;
@@ -868,12 +886,12 @@ uint8_t Max14819::enableCyclicSend(uint8_t mc, uint8_t sizeData, uint8_t *pData,
         if (port == PORTB)
             retValue = uint8_t(retValue | writeRegister(CyclTmrB, TCyclBs1 | cycleMult));
     } else {
-        return ERROR;
+        return custom::ERROR;
     }
 
     // Test if message is not too long
     if ((sizeData + 2) > MAX_MSG_LENGTH) { //include 1 byte master command and 1 byte for checksum
-        return ERROR;
+        return custom::ERROR;
     }
 
     uint8_t bufferRegister;
@@ -916,7 +934,7 @@ uint8_t Max14819::enableCyclicSend(uint8_t mc, uint8_t sizeData, uint8_t *pData,
 //!
 //!******************************************************************************
 uint8_t Max14819::disableCyclicSend(PortSelect port) {
-    uint8_t retValue = SUCCESS;
+    uint8_t retValue = custom::SUCCESS;
 
     // Disable cyclic send
     if (port == PORTA)
@@ -973,7 +991,7 @@ uint8_t Max14819::disableCyclicSend(PortSelect port) {
 //!
 //!******************************************************************************
 uint8_t Max14819::enableLedControl(PortSelect port) {
-    uint8_t retValue = SUCCESS;
+    uint8_t retValue = custom::SUCCESS;
 
     // Enable LedRxRdy and LedRxErr LED, disable interrupts LedRxRdy and LedRxErr
     // LEDs are switched off
@@ -990,7 +1008,7 @@ uint8_t Max14819::enableLedControl(PortSelect port) {
        isLedCtrlPortBEn_ = 1;
         break;
     default:
-        retValue = ERROR;
+        retValue = custom::ERROR;
         break;
     }
 
@@ -1011,7 +1029,7 @@ uint8_t Max14819::enableLedControl(PortSelect port) {
 //!
 //!******************************************************************************
 uint8_t Max14819::disableLedControl(PortSelect port) {
-    uint8_t retValue = SUCCESS;
+    uint8_t retValue = custom::SUCCESS;
 
     // Disable LedRxRdy and LedRxErr LED, enable interrupts LedRxRdy and LedRxErr
     uint8_t shadowReg = readRegister(LEDCtrl);
@@ -1027,7 +1045,7 @@ uint8_t Max14819::disableLedControl(PortSelect port) {
         isLedCtrlPortBEn_ = 0;
         break;
     default:
-        retValue = ERROR;
+        retValue = custom::ERROR;
         break;
     }
 
@@ -1048,11 +1066,11 @@ uint8_t Max14819::disableLedControl(PortSelect port) {
 //!
 //!******************************************************************************
 uint8_t Max14819::writeLed(HardwareBase::PinNames led, uint8_t state) {
-    uint8_t retValue = SUCCESS;
+    uint8_t retValue = custom::SUCCESS;
     uint8_t shadowReg = 0;
 
     if ((state != LED_ON) && (state != LED_OFF)) {
-        return ERROR;
+        return custom::ERROR;
     }
 
     switch(driver_){
@@ -1077,7 +1095,7 @@ uint8_t Max14819::writeLed(HardwareBase::PinNames led, uint8_t state) {
                     retValue = uint8_t(retValue | writeRegister(LEDCtrl, LEDEn2A ^ shadowReg));
                 }
             } else
-                retValue = ERROR;
+                retValue = custom::ERROR;
             break;
         case HardwareBase::port0LedRxRdy:
             if (isLedCtrlPortAEn_) {
@@ -1112,7 +1130,7 @@ uint8_t Max14819::writeLed(HardwareBase::PinNames led, uint8_t state) {
                     retValue = uint8_t(retValue | writeRegister(LEDCtrl, LEDEn2B ^ shadowReg));
                 }
             } else
-                retValue = ERROR;
+                retValue = custom::ERROR;
             break;
         case HardwareBase::port1LedRxRdy:
             if (isLedCtrlPortBEn_) {
@@ -1127,7 +1145,7 @@ uint8_t Max14819::writeLed(HardwareBase::PinNames led, uint8_t state) {
                     retValue = uint8_t(retValue | writeRegister(LEDCtrl, LEDEn1B ^ shadowReg));
                 }
             } else
-                retValue = ERROR;
+                retValue = custom::ERROR;
             break;
 		default: break;
         }// end switch(led)
@@ -1153,7 +1171,7 @@ uint8_t Max14819::writeLed(HardwareBase::PinNames led, uint8_t state) {
                     retValue = uint8_t(retValue | writeRegister(LEDCtrl, LEDEn2A ^ shadowReg));
                 }
             } else
-                retValue = ERROR;
+                retValue = custom::ERROR;
             break;
         case HardwareBase::port2LedRxRdy:
             if (isLedCtrlPortAEn_) {
@@ -1188,7 +1206,7 @@ uint8_t Max14819::writeLed(HardwareBase::PinNames led, uint8_t state) {
                     retValue = uint8_t(retValue | writeRegister(LEDCtrl, LEDEn2B ^ shadowReg));
                 }
             } else
-                retValue = ERROR;
+                retValue = custom::ERROR;
             break;
         case HardwareBase::port3LedRxRdy:
             if (isLedCtrlPortBEn_) {
@@ -1203,13 +1221,13 @@ uint8_t Max14819::writeLed(HardwareBase::PinNames led, uint8_t state) {
                     retValue = uint8_t(retValue | writeRegister(LEDCtrl, LEDEn1B ^ shadowReg));
                 }
             } else
-                retValue = ERROR;
+                retValue = custom::ERROR;
             break;
 		default: break;
         } // end switch(led)
         break;
     default:
-        retValue = ERROR;
+        retValue = custom::ERROR;
         break;
     } // end switch(driver)
 
@@ -1230,7 +1248,7 @@ uint8_t Max14819::writeLed(HardwareBase::PinNames led, uint8_t state) {
 //!******************************************************************************
 uint8_t Max14819::writeDIConfig(PortSelect port, uint8_t currentType,
         uint8_t threshold, uint8_t filter) {
-    uint8_t retValue = SUCCESS;
+    uint8_t retValue = custom::SUCCESS;
     uint8_t shadowReg = 0;
 
     // Write config
@@ -1269,7 +1287,7 @@ uint8_t config = 0;
         config = ((readRegister(IOStCfgB)) & 0x03);
         break;
     default:
-        config = ERROR;
+        config = custom::ERROR;
         break;
     }
     return config;
@@ -1296,7 +1314,7 @@ uint8_t Max14819::readCQ(PortSelect port) {
         state = ((readRegister(IOStCfgB)) & CQLevel) >> 6;
         break;
     default:
-        state = ERROR;
+        state = custom::ERROR;
         break;
     }
     return state;
@@ -1313,7 +1331,7 @@ uint8_t Max14819::readCQ(PortSelect port) {
 //!
 //!******************************************************************************
 uint8_t Max14819::writeCQ(PortSelect port, uint8_t value) {
-    uint8_t retValue = SUCCESS;
+    uint8_t retValue = custom::SUCCESS;
 
    switch(port){
    case PORTA:
@@ -1328,7 +1346,7 @@ uint8_t Max14819::writeCQ(PortSelect port, uint8_t value) {
             retValue = uint8_t(retValue | writeRegister(LCnfgA, LRT0 | LBL0 | LBL1 | LClimDis | LEn));
             break;
         default:
-            retValue = ERROR;
+            retValue = custom::ERROR;
             break;
         } // switch(value)
         break;
@@ -1344,7 +1362,7 @@ uint8_t Max14819::writeCQ(PortSelect port, uint8_t value) {
             retValue = uint8_t(retValue | writeRegister(LCnfgB, LRT0 | LBL0 | LBL1 | LClimDis | LEn));
             break;
         default:
-            retValue = ERROR;
+            retValue = custom::ERROR;
             break;
         }
     }
@@ -1372,7 +1390,7 @@ uint8_t Max14819::readDI(PortSelect port) {
         state = ((readRegister(IOStCfgB)) & DiLevel) >> 7;
         break;
     default:
-        state = ERROR;
+        state = custom::ERROR;
         break;
     }
     return state;

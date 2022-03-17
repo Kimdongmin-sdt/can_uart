@@ -24,11 +24,12 @@
 //!	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //!	 See the License for the specific language governing permissions and
 //!	 limitations under the License.
-//!	
+//!
 //!*****************************************************************************
 #ifndef _Demonstrator_V1_0_H_
 #define _Demonstrator_V1_0_H_
 #include "HardwareBase.h"
+#include "mbed_header.h"
 
 //add your includes for the project Demonstrator_V1_0 here
 void Demo_setup(HardwareBase *hardware_loc);

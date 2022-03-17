@@ -25,7 +25,7 @@
 //!	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //!	 See the License for the specific language governing permissions and
 //!	 limitations under the License.
-//!	
+//!
 //!*****************************************************************************
 
 //!***** Header-Files ************************************************************
@@ -37,7 +37,7 @@
 	#include <stdio.h>
 #else
 	#include <cstdio>
-#endif	
+#endif
 
 //!***** Macros ******************************************************************
 
@@ -126,18 +126,18 @@ IOLMasterPortMax14819::~IOLMasterPortMax14819() {
 //!*******************************************************************************
 uint8_t IOLMasterPortMax14819::begin() {
 	char buf[256];
-    uint8_t retValue = SUCCESS;
+    uint8_t retValue = custom::SUCCESS; // custom::SUCCESS
 
     // Initialize drivers
-    if( pDriver_->begin(port_) == ERROR){
-        retValue = ERROR;
+    if( pDriver_->begin(port_) == custom::ERROR){
+        retValue = custom::ERROR;
         // TODO: Serial.println("Error initialize driver01 PortA");
     }
     pDriver_->Serial_Write("WakeUp");
     // Generate wakeup
     retValue = uint8_t(retValue | pDriver_->wakeUpRequest(port_, &comSpeed_ ));
-   if(retValue == ERROR){
-       // TODO: Serial.println("Error wakeup driver01 PortA");
+   if(retValue == custom::ERROR){
+       printf("Error wakeup driver01 PortA!!\n");
    }
    else{
        sprintf(buf, "Communication established with %d bauds\n", comSpeed_);// TODO:
@@ -153,22 +153,25 @@ uint8_t IOLMasterPortMax14819::begin() {
    readDirectParameterPage(0x02, pData);
 
    // VendorID
+#if 1
    readDirectParameterPage(0x07, pData); //MSB
    readDirectParameterPage(0x08, pData+1); //LSB
    VendorID = uint16_t((pData[0] << 8) + pData[1]);
+#endif
+
    // DeviceID
    readDirectParameterPage(0x09, pData); //MSB
    readDirectParameterPage(0x0A, pData+1);
    readDirectParameterPage(0x0B, pData+2); //LSB
    DeviceID = (pData[0] << 16) + (pData[1] << 8) + pData[2];
-   sprintf(buf, "Vendor ID: %d, Device ID: %d\n", VendorID, DeviceID);
+   printf("Vendor ID: 0x%06x, Device ID: 0x%08x\n", VendorID, DeviceID);
    pDriver_->Serial_Write(buf);
 
     // Switch to operational
 
    uint8_t value[1] = {IOL::MC::DEV_OPERATE};
-    if(pDriver_->writeData(IOL::MC::WRITE, 1, value , 1, IOL::M_TYPE_0, port_) == ERROR){
-        sprintf(buf, "Error operate driver01 PortA");// TODO: 
+    if(pDriver_->writeData(IOL::MC::WRITE, 1, value , 1, IOL::M_TYPE_0, port_) == custom::ERROR){
+        sprintf(buf, "Error operate driver01 PortA");// TODO:
 		pDriver_->Serial_Write(buf);
     }
     return retValue;
@@ -187,7 +190,7 @@ uint8_t IOLMasterPortMax14819::begin() {
 //!
 //!*******************************************************************************
 uint8_t IOLMasterPortMax14819::end() {
-    uint8_t retValue = SUCCESS;
+    uint8_t retValue = custom::SUCCESS;
 
     // Send device fallback command
 	retValue = uint8_t(retValue | pDriver_->writeData(IOL::MC::DEV_FALLBACK, 0, nullptr , 1, IOL::M_TYPE_0, port_));
@@ -336,7 +339,7 @@ uint8_t IOLMasterPortMax14819::readDirectParameterPage(uint8_t address, uint8_t 
 
 	MC = uint8_t((1 << 7) + (0b01 << 5) + address);
 
-	uint8_t retValue = SUCCESS;
+	uint8_t retValue = custom::SUCCESS;
 
 	// Send processdata request to device
 	retValue = uint8_t(retValue | pDriver_->writeData(MC, 0, nullptr, 1, IOL::M_TYPE_0, port_));
@@ -365,7 +368,7 @@ uint8_t IOLMasterPortMax14819::readDirectParameterPage(uint8_t address, uint8_t 
 //!
 //!*******************************************************************************
 uint8_t IOLMasterPortMax14819::readPD(uint8_t *pData, uint8_t sizeData) {
-    uint8_t retValue = SUCCESS;
+    uint8_t retValue = custom::SUCCESS;
 
     // Send processdata request to device
     retValue = uint8_t(retValue | pDriver_->writeData(IOL::MC::PD_READ, 0, nullptr , sizeData, IOL::M_TYPE_2_X, port_));
@@ -373,10 +376,16 @@ uint8_t IOLMasterPortMax14819::readPD(uint8_t *pData, uint8_t sizeData) {
 	pDriver_->wait_for(10);
 
     // Receive answer
-    retValue = uint8_t(retValue | pDriver_->readData(pData,  4,  port_));
-    if((pData[3]&IOL::PD_VALID_BIT) != 0){
-		retValue = ERROR;
+    retValue = uint8_t(retValue | pDriver_->readData(pData, sizeData, port_));
+    if((pData[sizeData - 1]&IOL::PD_VALID_BIT) != 0){
+		retValue = custom::ERROR;
 	}
+
+    for (int i = 0; i < sizeData; i++) {
+        printf("pData[%2d] : 0x%02x\n", i, pData[i]);
+    }
+
+    putchar('\n');
     return retValue;
 }
 
@@ -397,7 +406,7 @@ uint8_t IOLMasterPortMax14819::readPD(uint8_t *pData, uint8_t sizeData) {
 //!
 //!*******************************************************************************
 uint8_t IOLMasterPortMax14819::writePD(uint8_t sizeData, uint8_t *pData, uint8_t sizeAnswer, uint8_t mSeqType) {
-    uint8_t retValue = SUCCESS;
+    uint8_t retValue = custom::SUCCESS;
 
     // Send processdata to device
     retValue = uint8_t(retValue | pDriver_->writeData(IOL::MC::WRITE, sizeData, pData, sizeAnswer, mSeqType, port_));
