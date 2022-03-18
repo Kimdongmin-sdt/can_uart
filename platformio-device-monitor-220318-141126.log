@@ -1,0 +1,610 @@
+14:11:26.330 > end, data[0] : 0x01,	 data[1] : 0x02
+14:11:26.330 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:26.330 > send, data[0] : 0x01,	 data[1] : 0x80
+14:11:26.330 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:26.330 > send, data[0] : 0x01,	 data[1] : 0xad
+14:11:26.330 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:26.330 > send, data[0] : 0x07,	 data[1] : 0x01
+14:11:26.330 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:26.330 > readRegister !!
+14:11:26.330 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:26.330 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:26.331 > read_cnt from SDO : 0
+14:11:26.331 > readRegister !!
+14:11:26.331 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:26.331 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:26.331 > readRegister !!
+14:11:26.331 > send, data[0] :<DAPLink:Overflow>
+14:11:26.338 > readRegister !!
+14:11:26.339 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:26.342 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:26.395 > readRegister !!
+14:11:26.396 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:26.400 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:26.452 > readRegister !!
+14:11:26.454 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:26.457 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:26.509 > readRegister !!
+14:11:26.511 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:26.514 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:26.567 > readRegister !!
+14:11:26.568 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:26.571 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:26.624 > readRegister !!
+14:11:26.625 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:26.629 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:26.681 > readRegister !!
+14:11:26.683 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:26.686 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:26.738 > readRegister !!
+14:11:26.740 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:26.743 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:26.796 > readRegister !!
+14:11:26.797 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:26.800 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:26.853 > readRegister !!
+14:11:26.854 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:26.858 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:26.910 > readRegister !!
+14:11:26.911 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:26.915 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:26.967 > readRegister !!
+14:11:26.969 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:26.973 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:27.025 > readRegister !!
+14:11:27.026 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:27.030 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:27.082 > readRegister !!
+14:11:27.084 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:27.086 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:27.139 > readRegister !!
+14:11:27.140 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:27.144 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:27.196 > readRegister !!
+14:11:27.198 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:27.201 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:27.253 > readRegister !!
+14:11:27.255 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:27.258 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:27.311 > readRegister !!
+14:11:27.312 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:27.315 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:27.368 > pData[ 0] : 0x00
+14:11:27.369 > pData[ 1] : 0x00
+14:11:27.371 > pData[ 2] : 0x00
+14:11:27.372 > pData[ 3] : 0x00
+14:11:27.374 > pData[ 4] : 0x00
+14:11:27.376 > pData[ 5] : 0x00
+14:11:27.378 > pData[ 6] : 0x00
+14:11:27.380 > pData[ 7] : 0x00
+14:11:27.380 > pData[ 8] : 0x00
+14:11:27.382 > pData[ 9] : 0x00
+14:11:27.383 > pData[10] : 0x00
+14:11:27.387 > pData[11] : 0x00
+14:11:27.387 > pData[12] : 0x00
+14:11:27.388 > pData[13] : 0x00
+14:11:27.389 > pData[14] : 0x00
+14:11:27.391 > pData[15] : 0x00
+14:11:27.392 > pData[16] : 0x00
+14:11:27.394 > pData[17] : 0x00
+14:11:27.396 > pData[18] : 0x00
+14:11:27.397 > pData[19] : 0x00
+14:11:27.399 > 
+14:11:27.399 > Serial_Write, buf : Messung
+14:11:27.401 > Serial_Write, buf : 0
+14:11:27.501 > send, data[0] : 0x01,	 data[1] : 0x14
+14:11:27.504 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:27.556 > send, data[0] : 0x01,	 data[1] : 0x02
+14:11:27.560 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:27.612 > send, data[0] : 0x01,	 data[1] : 0x80
+14:11:27.615 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:27.667 > send, data[0] : 0x01,	 data[1] : 0xad
+14:11:27.670 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:27.722 > send, data[0] : 0x07,	 data[1] : 0x01
+14:11:27.726 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:27.787 > readRegister !!
+14:11:27.789 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:27.792 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:27.845 > read_cnt from SDO : 0
+14:11:27.846 > readRegister !!
+14:11:27.848 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:27.851 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:27.904 > readRegister !!
+14:11:27.905 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:27.908 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:27.961 > readRegister !!
+14:11:27.962 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:27.966 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:28.018 > readRegister !!
+14:11:28.020 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:28.023 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:28.075 > readRegister !!
+14:11:28.077 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:28.080 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:28.133 > readRegister !!
+14:11:28.134 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:28.137 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:28.190 > readRegister !!
+14:11:28.191 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:28.195 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:28.247 > readRegister !!
+14:11:28.249 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:28.252 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:28.304 > readRegister !!
+14:11:28.306 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:28.309 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:28.362 > readRegister !!
+14:11:28.363 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:28.366 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:28.419 > readRegister !!
+14:11:28.420 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:28.423 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:28.476 > readRegister !!
+14:11:28.477 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:28.482 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:28.533 > readRegister !!
+14:11:28.535 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:28.538 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:28.590 > readRegister !!
+14:11:28.592 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:28.595 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:28.648 > readRegister !!
+14:11:28.649 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:28.652 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:28.705 > readRegister !!
+14:11:28.706 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:28.710 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:28.762 > readRegister !!
+14:11:28.764 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:28.767 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:28.819 > readRegister !!
+14:11:28.821 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:28.824 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:28.877 > readRegister !!
+14:11:28.878 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:28.881 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:28.934 > readRegister !!
+14:11:28.935 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:28.939 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:28.991 > pData[ 0] : 0x00
+14:11:28.992 > pData[ 1] : 0x00
+14:11:28.994 > pData[ 2] : 0x00
+14:11:28.996 > pData[ 3] : 0x00
+14:11:28.997 > pData[ 4] : 0x00
+14:11:28.999 > pData[ 5] : 0x00
+14:11:29.000 > pData[ 6] : 0x00
+14:11:29.002 > pData[ 7] : 0x00
+14:11:29.003 > pData[ 8] : 0x00
+14:11:29.005 > pData[ 9] : 0x00
+14:11:29.006 > pData[10] : 0x00
+14:11:29.008 > pData[11] : 0x00
+14:11:29.009 > pData[12] : 0x00
+14:11:29.012 > pData[13] : 0x00
+14:11:29.013 > pData[14] : 0x00
+14:11:29.014 > pData[15] : 0x00
+14:11:29.016 > pData[16] : 0x00
+14:11:29.017 > pData[17] : 0x00
+14:11:29.019 > pData[18] : 0x00
+14:11:29.020 > pData[19] : 0x00
+14:11:29.022 > 
+14:11:29.022 > Serial_Write, buf : Messung
+14:11:29.024 > Serial_Write, buf : 0
+14:11:29.124 > send, data[0] : 0x01,	 data[1] : 0x14
+14:11:29.128 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:29.180 > send, data[0] : 0x01,	 data[1] : 0x02
+14:11:29.183 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:29.235 > send, data[0] : 0x01,	 data[1] : 0x80
+14:11:29.238 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:29.290 > send, data[0] : 0x01,	 data[1] : 0xad
+14:11:29.293 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:29.346 > send, data[0] : 0x07,	 data[1] : 0x01
+14:11:29.349 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:29.411 > readRegister !!
+14:11:29.412 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:29.415 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:29.468 > read_cnt from SDO : 0
+14:11:29.470 > readRegister !!
+14:11:29.471 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:29.474 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:29.527 > readRegister !!
+14:11:29.528 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:29.532 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:29.584 > readRegister !!
+14:11:29.586 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:29.589 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:29.641 > readRegister !!
+14:11:29.643 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:29.646 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:29.699 > readRegister !!
+14:11:29.700 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:29.703 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:29.756 > readRegister !!
+14:11:29.757 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:29.761 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:29.813 > readRegister !!
+14:11:29.815 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:29.818 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:29.870 > readRegister !!
+14:11:29.872 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:29.875 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:29.928 > readRegister !!
+14:11:29.929 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:29.932 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:29.985 > readRegister !!
+14:11:29.986 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:29.990 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:30.042 > readRegister !!
+14:11:30.043 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:30.047 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:30.099 > readRegister !!
+14:11:30.103 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:30.104 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:30.156 > readRegister !!
+14:11:30.158 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:30.161 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:30.216 >  trxecrn[t0D7 _
+14:11:30.752 > 0sdxra or d : ae1  00r,8 a
+14:11:31.670 > 0e[t[xass d	0] ,d 0pData[ 0] : 0x00
+14:11:32.239 > pData[ 1] : 0x00
+14:11:32.241 > pData[ 2] : 0x00
+14:11:32.242 > pData[ 3] : 0x00
+14:11:32.243 > pData[ 4] : 0x00
+14:11:32.245 > pData[ 5] : 0x00
+14:11:32.246 > pData[ 6] : 0x00
+14:11:32.248 > pData[ 7] : 0x00
+14:11:32.249 > pData[ 8] : 0x00
+14:11:32.251 > pData[ 9] : 0x00
+14:11:32.252 > pData[10] : 0x00
+14:11:32.254 > pData[11] : 0x00
+14:11:32.256 > pData[12] : 0x00
+14:11:32.257 > pData[13] : 0x00
+14:11:32.258 > pData[14] : 0x00
+14:11:32.260 > pData[15] : 0x00
+14:11:32.262 > pData[16] : 0x00
+14:11:32.263 > pData[17] : 0x00
+14:11:32.265 > pData[18] : 0x00
+14:11:32.266 > pData[19] : 0x00
+14:11:32.268 > 
+14:11:32.268 > Serial_Write, buf : Messung
+14:11:32.271 > Serial_Write, buf : 0
+14:11:32.370 > send, data[0] : 0x01,	 data[1] : 0x14
+14:11:32.374 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:32.426 > send, data[0] : 0x01,	 data[1] : 0x02
+14:11:32.429 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:32.481 > send, data[0] : 0x01,	 data[1] : 0x80
+14:11:32.484 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:32.536 > send, data[0] : 0x01,	 data[1] : 0xad
+14:11:32.539 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:32.591 > send, data[0] : 0x07,	 data[1] : 0x01
+14:11:32.595 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:32.657 > readRegister !!
+14:11:32.658 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:32.661 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:32.714 > read_cnt from SDO : 0
+14:11:32.716 > readRegister !!
+14:11:32.717 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:32.721 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:32.773 > readRegister !!
+14:11:32.774 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:32.778 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:32.830 > readRegister !!
+14:11:32.832 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:32.835 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:32.888 > readRegister !!
+14:11:32.889 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:32.892 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:32.945 > readRegister !!
+14:11:32.946 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:32.949 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:33.002 > readRegister !!
+14:11:33.003 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:33.007 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:33.059 > readRegister !!
+14:11:33.061 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:33.064 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:33.117 > readRegister !!
+14:11:33.118 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:33.121 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:33.174 > readRegister !!
+14:11:33.175 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:33.179 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:33.231 > readRegister !!
+14:11:33.232 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:33.236 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:33.288 > readRegister !!
+14:11:33.290 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:33.293 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:33.345 > readRegister !!
+14:11:33.347 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:33.350 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:33.403 > readRegister !!
+14:11:33.404 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:33.407 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:33.460 > readRegister !!
+14:11:33.461 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:33.465 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:33.517 > readRegister !!
+14:11:33.518 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:33.522 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:33.574 > readRegister !!
+14:11:33.576 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:33.579 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:33.631 > readRegister !!
+14:11:33.633 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:33.636 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:33.689 > readRegister !!
+14:11:33.690 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:33.693 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:33.746 > readRegister !!
+14:11:33.747 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:33.751 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:33.803 > readRegister !!
+14:11:33.805 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:33.808 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:33.860 > pData[ 0] : 0x00
+14:11:33.862 > pData[ 1] : 0x00
+14:11:33.863 > pData[ 2] : 0x00
+14:11:33.865 > pData[ 3] : 0x00
+14:11:33.866 > pData[ 4] : 0x00
+14:11:33.868 > pData[ 5] : 0x00
+14:11:33.870 > pData[ 6] : 0x00
+14:11:33.871 > pData[ 7] : 0x00
+14:11:33.873 > pData[ 8] : 0x00
+14:11:33.874 > pData[ 9] : 0x00
+14:11:33.876 > pData[10] : 0x00
+14:11:33.877 > pData[11] : 0x00
+14:11:33.879 > pData[12] : 0x00
+14:11:33.880 > pData[13] : 0x00
+14:11:33.882 > pData[14] : 0x00
+14:11:33.883 > pData[15] : 0x00
+14:11:33.885 > pData[16] : 0x00
+14:11:33.886 > pData[17] : 0x00
+14:11:33.888 > pData[18] : 0x00
+14:11:33.890 > pData[19] : 0x00
+14:11:33.891 > 
+14:11:33.891 > Serial_Write, buf : Messung
+14:11:33.894 > Serial_Write, buf : 0
+14:11:33.994 > send, data[0] : 0x01,	 data[1] : 0x14
+14:11:33.997 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:34.049 > send, data[0] : 0x01,	 data[1] : 0x02
+14:11:34.052 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:34.104 > send, data[0] : 0x01,	 data[1] : 0x80
+14:11:34.107 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:34.159 > send, data[0] : 0x01,	 data[1] : 0xad
+14:11:34.163 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:34.215 > send, data[0] : 0x07,	 data[1] : 0x01
+14:11:34.218 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:34.280 > readRegister !!
+14:11:34.281 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:34.285 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:34.337 > read_cnt from SDO : 0
+14:11:34.339 > readRegister !!
+14:11:34.341 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:34.344 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:34.396 > readRegister !!
+14:11:34.398 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:34.401 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:34.454 > readRegister !!
+14:11:34.455 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:34.458 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:34.511 > readRegister !!
+14:11:34.512 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:34.515 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:34.568 > readRegister !!
+14:11:34.569 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:34.573 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:34.625 > readRegister !!
+14:11:34.627 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:34.630 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:34.682 > readRegister !!
+14:11:34.684 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:34.687 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:34.740 > readRegister !!
+14:11:34.741 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:34.744 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:34.797 > readRegister !!
+14:11:34.798 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:34.802 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:34.854 > readRegister !!
+14:11:34.856 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:34.859 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:34.911 > readRegister !!
+14:11:34.913 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:34.916 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:34.969 > readRegister !!
+14:11:34.970 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:34.973 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:35.026 > readRegister !!
+14:11:35.027 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:35.031 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:35.083 > readRegister !!
+14:11:35.085 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:35.088 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:35.140 > readRegister !!
+14:11:35.142 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:35.145 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:35.198 > readRegister !!
+14:11:35.199 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:35.202 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:35.255 > readRegister !!
+14:11:35.256 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:35.260 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:35.312 > readRegister !!
+14:11:35.314 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:35.317 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:35.369 > readRegister !!
+14:11:35.371 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:35.374 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:35.427 > readRegister !!
+14:11:35.428 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:35.431 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:35.484 > pData[ 0] : 0x00
+14:11:35.485 > pData[ 1] : 0x00
+14:11:35.487 > pData[ 2] : 0x00
+14:11:35.488 > pData[ 3] : 0x00
+14:11:35.490 > pData[ 4] : 0x00
+14:11:35.491 > pData[ 5] : 0x00
+14:11:35.493 > pData[ 6] : 0x00
+14:11:35.495 > pData[ 7] : 0x00
+14:11:35.496 > pData[ 8] : 0x00
+14:11:35.498 > pData[ 9] : 0x00
+14:11:35.499 > pData[10] : 0x00
+14:11:35.501 > pData[11] : 0x00
+14:11:35.502 > pData[12] : 0x00
+14:11:35.504 > pData[13] : 0x00
+14:11:35.505 > pData[14] : 0x00
+14:11:35.507 > pData[15] : 0x00
+14:11:35.508 > pData[16] : 0x00
+14:11:35.510 > pData[17] : 0x00
+14:11:35.512 > pData[18] : 0x00
+14:11:35.513 > pData[19] : 0x00
+14:11:35.515 > 
+14:11:35.515 > Serial_Write, buf : Messung
+14:11:35.517 > Serial_Write, buf : 0
+14:11:35.617 > send, data[0] : 0x01,	 data[1] : 0x14
+14:11:35.620 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:35.672 > send, data[0] : 0x01,	 data[1] : 0x02
+14:11:35.676 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:35.728 > send, data[0] : 0x01,	 data[1] : 0x80
+14:11:35.731 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:35.783 > send, data[0] : 0x01,	 data[1] : 0xad
+14:11:35.786 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:35.838 > send, data[0] : 0x07,	 data[1] : 0x01
+14:11:35.841 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:35.903 > readRegister !!
+14:11:35.905 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:35.908 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:35.961 > read_cnt from SDO : 0
+14:11:35.962 > readRegister !!
+14:11:35.964 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:35.967 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:36.020 > readRegister !!
+14:11:36.021 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:36.024 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:36.077 > readRegister !!
+14:11:36.078 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:36.082 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:36.134 > readRegister !!
+14:11:36.136 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:36.139 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:36.191 > readRegister !!
+14:11:36.193 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:36.196 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:36.249 > readRegister !!
+14:11:36.250 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:36.254 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:36.306 > readRegister !!
+14:11:36.307 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:36.311 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:36.363 > readRegister !!
+14:11:36.365 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:36.368 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:36.420 > readRegister !!
+14:11:36.422 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:36.425 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:36.478 > readRegister !!
+14:11:36.479 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:36.482 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:36.535 > readRegister !!
+14:11:36.536 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:36.540 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:36.592 > readRegister !!
+14:11:36.593 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:36.597 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:36.649 > readRegister !!
+14:11:36.651 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:36.654 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:36.707 > readRegister !!
+14:11:36.708 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:36.711 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:36.764 > readRegister !!
+14:11:36.765 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:36.768 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:36.821 > readRegister !!
+14:11:36.822 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:36.826 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:36.878 > readRegister !!
+14:11:36.880 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:36.883 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:36.935 > readRegister !!
+14:11:36.937 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:36.940 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:36.993 > readRegister !!
+14:11:36.994 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:36.997 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:37.050 > readRegister !!
+14:11:37.051 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:37.055 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:37.107 > pData[ 0] : 0x00
+14:11:37.109 > pData[ 1] : 0x00
+14:11:37.110 > pData[ 2] : 0x00
+14:11:37.112 > pData[ 3] : 0x00
+14:11:37.113 > pData[ 4] : 0x00
+14:11:37.115 > pData[ 5] : 0x00
+14:11:37.116 > pData[ 6] : 0x00
+14:11:37.118 > pData[ 7] : 0x00
+14:11:37.119 > pData[ 8] : 0x00
+14:11:37.121 > pData[ 9] : 0x00
+14:11:37.122 > pData[10] : 0x00
+14:11:37.124 > pData[11] : 0x00
+14:11:37.126 > pData[12] : 0x00
+14:11:37.127 > pData[13] : 0x00
+14:11:37.129 > pData[14] : 0x00
+14:11:37.130 > pData[15] : 0x00
+14:11:37.132 > pData[16] : 0x00
+14:11:37.133 > pData[17] : 0x00
+14:11:37.135 > pData[18] : 0x00
+14:11:37.136 > pData[19] : 0x00
+14:11:37.138 > 
+14:11:37.138 > Serial_Write, buf : Messung
+14:11:37.140 > Serial_Write, buf : 0
+14:11:37.240 > send, data[0] : 0x01,	 data[1] : 0x14
+14:11:37.244 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:37.296 > send, data[0] : 0x01,	 data[1] : 0x02
+14:11:37.299 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:37.351 > send, data[0] : 0x01,	 data[1] : 0x80
+14:11:37.354 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:37.406 > send, data[0] : 0x01,	 data[1] : 0xad
+14:11:37.409 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:37.461 > send, data[0] : 0x07,	 data[1] : 0x01
+14:11:37.465 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:37.526 > readRegister !!
+14:11:37.528 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:37.531 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:37.584 > read_cnt from SDO : 0
+14:11:37.586 > readRegister !!
+14:11:37.587 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:37.590 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:37.643 > readRegister !!
+14:11:37.644 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:37.648 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:37.700 > readRegister !!
+14:11:37.701 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:37.705 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:37.757 > readRegister !!
+14:11:37.759 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:37.762 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:37.814 > readRegister !!
+14:11:37.816 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:37.819 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:37.872 > readRegister !!
+14:11:37.873 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:37.876 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:37.929 > readRegister !!
+14:11:37.930 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:37.934 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:37.986 > readRegister !!
+14:11:37.988 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:37.991 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:38.043 > readRegister !!
+14:11:38.045 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:38.048 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:38.101 > readRegister !!
+14:11:38.102 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:38.105 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:38.158 > readRegister !!
+14:11:38.159 > send, data[0] : 0x81,	 data[1] : 0x00
+14:11:38.163 > recv, data[0] : 0x00,	 data[1] : 0x00
+14:11:38.219 > t[0] : 0x00
+14:11:38.275 > 0 	0rsta[00r[	 1a0 x0 aD0:9,n s0[1d0r]ret,,edar0a00 a:de
+14:11:39.728 > [:!1:r 0
