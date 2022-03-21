@@ -6,7 +6,6 @@ HardwareArduino hardware_loc;
 int main(void)
 {
     printf("Main.cpp, %s function\n", __func__);
-
     Demo_setup(&hardware_loc);
 
     while (true) {
