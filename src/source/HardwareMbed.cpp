@@ -51,10 +51,10 @@ HardwareMbed::HardwareMbed()
     pinMode(52, in);
     pinMode(53, in);
 #else
-    IOLINK_spi 	  = new SPI(MBED_CONF_APP_IO_LINK_SPI_MOSI,
-                           MBED_CONF_APP_IO_LINK_SPI_MISO,
-                           MBED_CONF_APP_IO_LINK_SPI_SCK);
-	IOLINK_spi_cs = new DigitalOut(MBED_CONF_APP_IO_LINK_SPI_CS, 1);
+    IOLINK_spi 	  = new SPI(MBED_CONF_DEVICE_PIN_IO_LINK_SPI_MOSI,
+                           MBED_CONF_DEVICE_PIN_IO_LINK_SPI_MISO,
+                           MBED_CONF_DEVICE_PIN_IO_LINK_SPI_SCK);
+	IOLINK_spi_cs = new DigitalOut(MBED_CONF_DEVICE_PIN_IO_LINK_SPI_CS, 1);
 #endif
 }
 
@@ -286,8 +286,8 @@ void HardwareMbed::wait_for(uint32_t delay_ms)
 PinName HardwareMbed::get_pinnumber(PinNames pinname)
 {
 	switch (pinname) {
-		case port01CS:		return PB_12;	// SPI0_cs0
-		case port01IRQ:		return PD_0;	// empty D port pin number
+		case port01CS:		return MBED_CONF_DEVICE_PIN_IO_LINK_SPI_CS;	    // SPI0_cs0
+		case port01IRQ:		return MBED_CONF_DEVICE_PIN_IO_LINK_SPI_IRQ;	// empty D port pin number
 
 		case port23CS:		return PC_0;
 		case port23IRQ:		return PC_2;

@@ -1,0 +1,2 @@
+TARGET=nucleo_f429zi
+TOOLCHAIN=GCC_ARM
