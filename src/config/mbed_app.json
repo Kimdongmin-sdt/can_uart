@@ -1,0 +1,7 @@
+{
+    "target_overrides": {
+        "NUCLEO_F429ZI": {
+            "platform.stdio-baud-rate"  : 115200
+        }
+    }
+}

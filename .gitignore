@@ -3,4 +3,7 @@
 .vscode/c_cpp_properties.json
 .vscode/launch.json
 .vscode/ipch
-.log
+*.log
+BUILD/
+.mbed
+Doxygen/
