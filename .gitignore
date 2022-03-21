@@ -4,4 +4,4 @@
 .vscode/launch.json
 .vscode/ipch
 .log
-mbed-os
+mbed-os/
