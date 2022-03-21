@@ -25,12 +25,12 @@
 */
 
 #include "src/Demonstrator_V1_0.h"
-#include "src/HardwareArduino.h"
+#include "src/HardwareMbed.h"
 
-HardwareArduino hardware_loc;
+HardwareMbed hardware_loc;
 
 // the setup function runs once when you press reset or power the board
-void setup() {  
+void setup() {
   Demo_setup(& hardware_loc);
 }
 

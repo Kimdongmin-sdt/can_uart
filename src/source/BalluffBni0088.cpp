@@ -24,11 +24,11 @@
 //!	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //!	 See the License for the specific language governing permissions and
 //!	 limitations under the License.
-//!	
+//!
 //!*****************************************************************************
 
 //!**** Header-Files ************************************************************
-#include "BalluffBni0088.h"
+#include "../include/BalluffBni0088.h"
 
 //!**** Macros ******************************************************************
 

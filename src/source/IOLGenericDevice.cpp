@@ -1,9 +1,9 @@
 
 //!*****************************************************************************
-//!  \file      BalluffBus0023.cpp
+//!  \file      IOLGenericDevice.cpp
 //!*****************************************************************************
 //!
-//!  \brief		Balluff BUS0023 distance sensor specific driver, not implemented yet
+//!  \brief		Generic Device Layer, not implemented yet
 //!
 //!  \author    Pascal Frei (freip2)
 //!
@@ -28,13 +28,9 @@
 //!*****************************************************************************
 
 //!**** Header-Files ***********************************************************
-#include "BalluffBus0023.h"
+#include "../include/IOLGenericDevice.h"
 
-#ifdef ARDUINO
-	#include <stdio.h>
-#else
-	#include <cstdio>
-#endif
+#include <stdio.h>
 
 //!**** Macros *****************************************************************
 
@@ -46,13 +42,9 @@
 
 //!**** Implementation *********************************************************
 
-
-BalluffBus0023::BalluffBus0023():IOLGenericDevice(nullptr) {
-
-}
-
-BalluffBus0023::BalluffBus0023(IOLMasterPort * port) : IOLGenericDevice(port){
-
+IOLGenericDevice::IOLGenericDevice(IOLMasterPort * port)
+{
+	this->port = port;
 }
 
 //!*****************************************************************************
@@ -67,26 +59,7 @@ BalluffBus0023::BalluffBus0023(IOLMasterPort * port) : IOLGenericDevice(port){
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::begin() {
-	port->begin();
-
-	/*
-	uint8_t pData[3];
-	uint16_t VendorID;
-	uint32_t DeviceID;
-	port->readDirectParameterPage(0x02, pData);
-
-	// VendorID
-	port->readDirectParameterPage(0x07, pData); //MSB
-	port->readDirectParameterPage(0x08, pData + 1); //LSB
-	VendorID = uint16_t((pData[0] << 8) + (pData[1]));
-	// DeviceID
-	port->readDirectParameterPage(0x09, pData); //MSB
-	port->readDirectParameterPage(0x0A, pData + 1);
-	port->readDirectParameterPage(0x0B, pData + 2); //LSB
-	DeviceID = (pData[0] << 16) + (pData[1] << 8) + pData[2];
-	printf("Vendor ID: %d, Device ID: %d\n", VendorID, DeviceID);
-	*/
+void IOLGenericDevice::begin() {
 
 }
 
@@ -102,12 +75,12 @@ void BalluffBus0023::begin() {
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::end() {
+void IOLGenericDevice::end() {
 
 }
 
 //!*****************************************************************************
-//!  function :    readDistance
+//!  function :    eventHandler
 //!*****************************************************************************
 //!  \brief        Not implemented yet
 //!
@@ -118,22 +91,12 @@ void BalluffBus0023::end() {
 //!  \return       void
 //!
 //!*****************************************************************************
-uint16_t BalluffBus0023::readDistance() {
-	uint8_t data[4];
-	uint16_t distance = 0;
-	if(port->readPD(data, 4)!= ERROR){
-		distance = (uint16_t)(((data[1] << 8) | data[2]) >> 1);
-	}
+void IOLGenericDevice::eventHandler() {
 
-	for (int i = 0; i < 4; i++) {
-		printf("data[%d] : %d\t", i, data[i]);
-	}
-
-	return distance;
 }
 
 //!*****************************************************************************
-//!  function :    readSwitchState
+//!  function :    connectIOLinkMode
 //!*****************************************************************************
 //!  \brief        Not implemented yet
 //!
@@ -144,12 +107,12 @@ uint16_t BalluffBus0023::readDistance() {
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::readSwitchState() {
+void IOLGenericDevice::connectIOLinkMode() {
 
 }
 
 //!*****************************************************************************
-//!  function :    writeDetPoint1
+//!  function :    disconnectIOLinkMode
 //!*****************************************************************************
 //!  \brief        Not implemented yet
 //!
@@ -160,12 +123,12 @@ void BalluffBus0023::readSwitchState() {
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::writeDetPoint1() {
+void IOLGenericDevice::disconnectIOLinkMode() {
 
 }
 
 //!*****************************************************************************
-//!  function :    readDetPoint1
+//!  function :    writeCycleTme
 //!*****************************************************************************
 //!  \brief        Not implemented yet
 //!
@@ -176,12 +139,12 @@ void BalluffBus0023::writeDetPoint1() {
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::readDetPoint1() {
+void IOLGenericDevice::writeCycleTme() {
 
 }
 
 //!*****************************************************************************
-//!  function :    writeRetDetPoint1
+//!  function :    readCycleTime
 //!*****************************************************************************
 //!  \brief        Not implemented yet
 //!
@@ -192,12 +155,12 @@ void BalluffBus0023::readDetPoint1() {
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::writeRetDetPoint1() {
+void IOLGenericDevice::readCycleTime() {
 
 }
 
 //!*****************************************************************************
-//!  function :    readRetDetPoint1
+//!  function :    writeProcessData
 //!*****************************************************************************
 //!  \brief        Not implemented yet
 //!
@@ -208,12 +171,12 @@ void BalluffBus0023::writeRetDetPoint1() {
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::readRetDetPoint1() {
+void IOLGenericDevice::writeProcessData() {
 
 }
 
 //!*****************************************************************************
-//!  function :    writeDetPoint2
+//!  function :    readProcessData
 //!*****************************************************************************
 //!  \brief        Not implemented yet
 //!
@@ -224,12 +187,12 @@ void BalluffBus0023::readRetDetPoint1() {
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::writeDetPoint2() {
+void IOLGenericDevice::readProcessData() {
 
 }
 
 //!*****************************************************************************
-//!  function :    readDetPoint2
+//!  function :    writeCQ
 //!*****************************************************************************
 //!  \brief        Not implemented yet
 //!
@@ -240,12 +203,12 @@ void BalluffBus0023::writeDetPoint2() {
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::readDetPoint2() {
+void IOLGenericDevice::writeCQ() {
 
 }
 
 //!*****************************************************************************
-//!  function :    writeRetDetPoint2
+//!  function :    readCQ
 //!*****************************************************************************
 //!  \brief        Not implemented yet
 //!
@@ -256,12 +219,12 @@ void BalluffBus0023::readDetPoint2() {
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::writeRetDetPoint2() {
+void IOLGenericDevice::readCQ() {
 
 }
 
 //!*****************************************************************************
-//!  function :    readRetDetPoint2
+//!  function :    readDI
 //!*****************************************************************************
 //!  \brief        Not implemented yet
 //!
@@ -272,12 +235,12 @@ void BalluffBus0023::writeRetDetPoint2() {
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::readRetDetPoint2() {
+void IOLGenericDevice::readDI() {
 
 }
 
 //!*****************************************************************************
-//!  function :    writeSwitchMode
+//!  function :    writeSpecISDU
 //!*****************************************************************************
 //!  \brief        Not implemented yet
 //!
@@ -288,12 +251,12 @@ void BalluffBus0023::readRetDetPoint2() {
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::writeSwitchMode() {
+void IOLGenericDevice::writeSpecISDU() {
 
 }
 
 //!*****************************************************************************
-//!  function :    readSwitchMode
+//!  function :    readSpecISDU
 //!*****************************************************************************
 //!  \brief        Not implemented yet
 //!
@@ -304,12 +267,12 @@ void BalluffBus0023::writeSwitchMode() {
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::readSwitchMode() {
+void IOLGenericDevice::readSpecISDU() {
 
 }
 
 //!*****************************************************************************
-//!  function :    writeFilter
+//!  function :    readDeviceAccessLocks
 //!*****************************************************************************
 //!  \brief        Not implemented yet
 //!
@@ -320,12 +283,12 @@ void BalluffBus0023::readSwitchMode() {
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::writeFilter() {
+void IOLGenericDevice::readDeviceAccessLocks() {
 
 }
 
 //!*****************************************************************************
-//!  function :    readFilter
+//!  function :    readProfileCharacteristic
 //!*****************************************************************************
 //!  \brief        Not implemented yet
 //!
@@ -336,12 +299,12 @@ void BalluffBus0023::writeFilter() {
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::readFilter() {
+void IOLGenericDevice::readProfileCharacteristic() {
 
 }
 
 //!*****************************************************************************
-//!  function :    writeFilterStrength
+//!  function :    readPDInputDescriptor
 //!*****************************************************************************
 //!  \brief        Not implemented yet
 //!
@@ -352,12 +315,12 @@ void BalluffBus0023::readFilter() {
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::writeFilterStrength() {
+void IOLGenericDevice::readPDInputDescriptor() {
 
 }
 
 //!*****************************************************************************
-//!  function :    readFilterStrength
+//!  function :    readPDOutputDescriptor
 //!*****************************************************************************
 //!  \brief        Not implemented yet
 //!
@@ -368,12 +331,12 @@ void BalluffBus0023::writeFilterStrength() {
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::readFilterStrength() {
+void IOLGenericDevice::readPDOutputDescriptor() {
 
 }
 
 //!*****************************************************************************
-//!  function :    writeForgroundSuppression
+//!  function :    readVendorName
 //!*****************************************************************************
 //!  \brief        Not implemented yet
 //!
@@ -384,12 +347,12 @@ void BalluffBus0023::readFilterStrength() {
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::writeForgroundSuppression() {
+void IOLGenericDevice::readVendorName() {
 
 }
 
 //!*****************************************************************************
-//!  function :    readForegroundSuppression
+//!  function :    readVendorText
 //!*****************************************************************************
 //!  \brief        Not implemented yet
 //!
@@ -400,12 +363,12 @@ void BalluffBus0023::writeForgroundSuppression() {
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::readForegroundSuppression() {
+void IOLGenericDevice::readVendorText() {
 
 }
 
 //!*****************************************************************************
-//!  function :    writeTeachIn
+//!  function :    readProductName
 //!*****************************************************************************
 //!  \brief        Not implemented yet
 //!
@@ -416,12 +379,12 @@ void BalluffBus0023::readForegroundSuppression() {
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::writeTeachIn() {
+void IOLGenericDevice::readProductName() {
 
 }
 
 //!*****************************************************************************
-//!  function :    readTeachIn
+//!  function :    readProductID
 //!*****************************************************************************
 //!  \brief        Not implemented yet
 //!
@@ -432,6 +395,234 @@ void BalluffBus0023::writeTeachIn() {
 //!  \return       void
 //!
 //!*****************************************************************************
-void BalluffBus0023::readTeachIn() {
+void IOLGenericDevice::readProductID() {
+
+}
+
+//!*****************************************************************************
+//!  function :    readProductText
+//!*****************************************************************************
+//!  \brief        Not implemented yet
+//!
+//!  \type         local
+//!
+//!  \param[in]	   void
+//!
+//!  \return       void
+//!
+//!*****************************************************************************
+void IOLGenericDevice::readProductText() {
+
+}
+
+//!*****************************************************************************
+//!  function :    readSerialNumber
+//!*****************************************************************************
+//!  \brief        Not implemented yet
+//!
+//!  \type         local
+//!
+//!  \param[in]	   void
+//!
+//!  \return       void
+//!
+//!*****************************************************************************
+void IOLGenericDevice::readSerialNumber() {
+
+}
+
+//!*****************************************************************************
+//!  function :    readHardwareRev
+//!*****************************************************************************
+//!  \brief        Not implemented yet
+//!
+//!  \type         local
+//!
+//!  \param[in]	   void
+//!
+//!  \return       void
+//!
+//!*****************************************************************************
+void IOLGenericDevice::readHardwareRev() {
+
+}
+
+//!*****************************************************************************
+//!  function :    readFirmwareRev
+//!*****************************************************************************
+//!  \brief        Not implemented yet
+//!
+//!  \type         local
+//!
+//!  \param[in]	   void
+//!
+//!  \return       void
+//!
+//!*****************************************************************************
+void IOLGenericDevice::readFirmwareRev() {
+
+}
+
+//!*****************************************************************************
+//!  function :    writeMasterCycleTime
+//!*****************************************************************************
+//!  \brief        Not implemented yet
+//!
+//!  \type         local
+//!
+//!  \param[in]	   void
+//!
+//!  \return       void
+//!
+//!*****************************************************************************
+void IOLGenericDevice::writeMasterCycleTime() {
+
+}
+
+//!*****************************************************************************
+//!  function :    readMasterCycleTime
+//!*****************************************************************************
+//!  \brief        Not implemented yet
+//!
+//!  \type         local
+//!
+//!  \param[in]	   void
+//!
+//!  \return       void
+//!
+//!*****************************************************************************
+void IOLGenericDevice::readMasterCycleTime() {
+
+}
+
+//!*****************************************************************************
+//!  function :    readMinCycleTime() {
+//!*****************************************************************************
+//!  \brief        Not implemented yet
+//!
+//!  \type         local
+//!
+//!  \param[in]	   void
+//!
+//!  \return       void
+//!
+//!*****************************************************************************
+void IOLGenericDevice::readMinCycleTime() {
+	uint8_t pData[2];
+	char buf[64];
+	uint8_t time = port->readDirectParameterPage(0x2, pData);
+	sprintf(buf, "Min Cycle Time Data: %d, %d, Retval: %d", pData[0], pData[1], time);
+	//HardwareBase::Serial_Write(buf);
+}
+
+//!*****************************************************************************
+//!  function :    readMSeqCapability
+//!*****************************************************************************
+//!  \brief        Not implemented yet
+//!
+//!  \type         local
+//!
+//!  \param[in]	   void
+//!
+//!  \return       void
+//!
+//!*****************************************************************************
+void IOLGenericDevice::readMSeqCapability() {
+
+}
+
+//!*****************************************************************************
+//!  function :    readRevID
+//!*****************************************************************************
+//!  \brief        Not implemented yet
+//!
+//!  \type         local
+//!
+//!  \param[in]	   void
+//!
+//!  \return       void
+//!
+//!*****************************************************************************
+void IOLGenericDevice::readRevID() {
+
+}
+
+//!*****************************************************************************
+//!  function :    readProcessDataIn
+//!*****************************************************************************
+//!  \brief        Not implemented yet
+//!
+//!  \type         local
+//!
+//!  \param[in]	   void
+//!
+//!  \return       void
+//!
+//!*****************************************************************************
+void IOLGenericDevice::readProcessDataIn() {
+
+}
+
+//!*****************************************************************************
+//!  function :    readProcessDataOut
+//!*****************************************************************************
+//!  \brief        Not implemented yet
+//!
+//!  \type         local
+//!
+//!  \param[in]	   void
+//!
+//!  \return       void
+//!
+//!*****************************************************************************
+void IOLGenericDevice::readProcessDataOut() {
+
+}
+
+//!*****************************************************************************
+//!  function :    readVendorID
+//!*****************************************************************************
+//!  \brief        Not implemented yet
+//!
+//!  \type         local
+//!
+//!  \param[in]	   void
+//!
+//!  \return       void
+//!
+//!*****************************************************************************
+void IOLGenericDevice::readVendorID() {
+
+}
+
+//!*****************************************************************************
+//!  function :    readDeviceID
+//!*****************************************************************************
+//!  \brief        Not implemented yet
+//!
+//!  \type         local
+//!
+//!  \param[in]	   void
+//!
+//!  \return       void
+//!
+//!*****************************************************************************
+void IOLGenericDevice::readDeviceID() {
+
+}
+
+//!*****************************************************************************
+//!  function :    readFunctionID
+//!*****************************************************************************
+//!  \brief        Not implemented yet
+//!
+//!  \type         local
+//!
+//!  \param[in]	   void
+//!
+//!  \return       void
+//!
+//!*****************************************************************************
+void IOLGenericDevice::readFunctionID() {
 
 }

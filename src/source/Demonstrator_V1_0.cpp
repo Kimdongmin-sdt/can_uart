@@ -28,14 +28,14 @@
 //!*****************************************************************************
 
 //!**** Header-Files ***********************************************************
-#include "Demonstrator_V1_0.h"
+#include "../include/Demonstrator_V1_0.h"
 
-#include "Max14819.h"
-#include "BalluffBus0023.h"
-#include "IOLMasterPort.h"
-#include "IOLMasterPortMax14819.h"
-#include "IOLGenericDevice.h"
-#include "IOLink.h"
+#include "../include/Max14819.h"
+#include "../include/BalluffBus0023.h"
+#include "../include/IOLMasterPort.h"
+#include "../include/IOLMasterPortMax14819.h"
+#include "../include/IOLGenericDevice.h"
+#include "../include/IOLink.h"
 
 #ifdef ARDUINO
 	#include <stdio.h>

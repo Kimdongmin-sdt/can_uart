@@ -28,8 +28,8 @@
 //!*****************************************************************************
 
 //!**** Header-Files ************************************************************
-#include "IOLMasterPort.h"
-#include "Max14819.h"
+#include "../include/IOLMasterPort.h"
+#include "../include/Max14819.h"
 
 #ifdef ARDUINO
     #include <stdint.h>

@@ -1,6 +1,6 @@
 
 //!*****************************************************************************
-//!  \file      HardwareArduino.cpp
+//!  \file      HardwareMbed.cpp
 //!*****************************************************************************
 //!
 //!  \brief		Generic Hardware Layer abstraction of a physical layer
@@ -28,7 +28,7 @@
 //!*****************************************************************************
 
 //!**** Header-Files ************************************************************
-#include "HardwareArduino.h"
+#include "../include/HardwareMbed.h"
 #include <SPI.h>
 #include <stdio.h>
 
@@ -42,7 +42,7 @@
 
 //!**** Implementation **********************************************************
 
-HardwareArduino::HardwareArduino()
+HardwareMbed::HardwareMbed()
 {
     // Define all SPI signals for the Geckoboard as inputs. if not, MOSI cant be thrown to 0V
 
@@ -59,7 +59,7 @@ HardwareArduino::HardwareArduino()
 }
 
 
-HardwareArduino::~HardwareArduino()
+HardwareMbed::~HardwareMbed()
 {
 }
 
@@ -75,7 +75,7 @@ HardwareArduino::~HardwareArduino()
 //!  \return       void
 //!
 //!*****************************************************************************
-void HardwareArduino::begin(){
+void HardwareMbed::begin(){
 #if ARDUINO_FUNC
 	Serial.begin(115200);
 
@@ -124,7 +124,7 @@ void HardwareArduino::begin(){
 //!  \return       void
 //!
 //!*****************************************************************************
-void HardwareArduino::IO_Write(PinNames pinname, uint8_t state)
+void HardwareMbed::IO_Write(PinNames pinname, uint8_t state)
 {
     PinName pinnumber = get_pinnumber(pinname);
 #if ARDUINO_FUNC
@@ -147,7 +147,7 @@ void HardwareArduino::IO_Write(PinNames pinname, uint8_t state)
 //!  \return       void
 //!
 //!*****************************************************************************
-void HardwareArduino::IO_PinMode(PinNames pinname, PinMode mode)
+void HardwareMbed::IO_PinMode(PinNames pinname, PinMode mode)
 {
     PinName pinnumber = get_pinnumber(pinname);
     switch (mode) {
@@ -185,7 +185,7 @@ void HardwareArduino::IO_PinMode(PinNames pinname, PinMode mode)
 //!  \return       void
 //!
 //!*****************************************************************************
-void HardwareArduino::Serial_Write(char const * buf)
+void HardwareMbed::Serial_Write(char const * buf)
 {
 #if ARDUINO_FUNC
 	Serial.println(buf);
@@ -206,7 +206,7 @@ void HardwareArduino::Serial_Write(char const * buf)
 //!  \return       void
 //!
 //!*****************************************************************************
-void HardwareArduino::Serial_Write(int number)
+void HardwareMbed::Serial_Write(int number)
 {
 #if ARDUINO_FUNC
     Serial.print(number);
@@ -228,7 +228,7 @@ void HardwareArduino::Serial_Write(int number)
 //!  \return       void
 //!
 //!*****************************************************************************
-void HardwareArduino::SPI_Write(uint8_t channel, uint8_t * data, uint8_t length)
+void HardwareMbed::SPI_Write(uint8_t channel, uint8_t * data, uint8_t length)
 {
     switch (channel) {
     case 0:
@@ -266,7 +266,7 @@ void HardwareArduino::SPI_Write(uint8_t channel, uint8_t * data, uint8_t length)
 //!  \return       void
 //!
 //!*****************************************************************************
-void HardwareArduino::wait_for(uint32_t delay_ms)
+void HardwareMbed::wait_for(uint32_t delay_ms)
 {
     ThisThread::sleep_for(delay_ms);
 }
@@ -283,7 +283,7 @@ void HardwareArduino::wait_for(uint32_t delay_ms)
 //!  \return       the hardware-pinnumber
 //!
 //!*****************************************************************************
-PinName HardwareArduino::get_pinnumber(PinNames pinname)
+PinName HardwareMbed::get_pinnumber(PinNames pinname)
 {
 	switch (pinname) {
 		case port01CS:		return PB_12;	// SPI0_cs0
