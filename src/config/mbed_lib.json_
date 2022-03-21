@@ -1,5 +1,5 @@
 {
-    "name": "device_pin",
+    "name" : "device_pin",
     "config" : {
         "io_link_spi_mosi" : {
             "help" : "io_link_spi_mosi"
@@ -19,8 +19,6 @@
     },
     "target_overrides": {
         "NUCLEO_F429ZI": {
-            "target.stdio_uart_tx"      : "PD_5",
-            "target.stdio_uart_rx"      : "PD_6",
             "io_link_spi_mosi"          : "PB_15",
             "io_link_spi_miso"          : "PB_14",
             "io_link_spi_cs"            : "PB_12",

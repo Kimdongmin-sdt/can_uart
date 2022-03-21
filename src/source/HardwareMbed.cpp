@@ -45,16 +45,16 @@
 HardwareMbed::HardwareMbed()
 {
     // Define all SPI signals for the Geckoboard as inputs. if not, MOSI cant be thrown to 0V
-
-#if ARDUINO_FUNC
-    pinMode(50, in);
-    pinMode(52, in);
-    pinMode(53, in);
+#if 1
+    IOLINK_spi 	  = new SPI(MBED_CONF_APP_IO_LINK_SPI_MOSI,
+                            MBED_CONF_APP_IO_LINK_SPI_MISO,
+                            MBED_CONF_APP_IO_LINK_SPI_SCK);
+	IOLINK_spi_cs = new DigitalOut(MBED_CONF_APP_IO_LINK_SPI_CS, 1);
 #else
-    IOLINK_spi 	  = new SPI(MBED_CONF_DEVICE_PIN_IO_LINK_SPI_MOSI,
-                           MBED_CONF_DEVICE_PIN_IO_LINK_SPI_MISO,
-                           MBED_CONF_DEVICE_PIN_IO_LINK_SPI_SCK);
-	IOLINK_spi_cs = new DigitalOut(MBED_CONF_DEVICE_PIN_IO_LINK_SPI_CS, 1);
+    IOLINK_spi =    new SPI(MBED_CONF_IO_LINK_SPI_MOSI,
+                            MBED_CONF_IO_LINK_SPI_MISO,
+                            MBED_CONF_IO_LINK_SPI_SCK);
+    IOLINK_spi_cs = new DigitalOut(MBED_CONF_IO_LINK_SPI_CS, 1);
 #endif
 }
 
@@ -76,18 +76,6 @@ HardwareMbed::~HardwareMbed()
 //!
 //!*****************************************************************************
 void HardwareMbed::begin(){
-#if ARDUINO_FUNC
-	Serial.begin(115200);
-
-	Serial.print("\nBeginne mit der Initialisierung\n");
-
-	SPI.begin();
-	SPI.beginTransaction(SPISettings(20000000, MSBFIRST, SPI_MODE0));
-	delay(1000);
-
-	Serial_Write("Init_SPI finished");
-	wait_for(1*1000);
-#else
 	// Setup the spi for 8 bit data, high steady state clock,
     // second edge capture, with a 1MHz clock rate
 	/*
@@ -107,8 +95,6 @@ void HardwareMbed::begin(){
 #define DURATION_MULTIPLE		1
 #define SLEEP_DURATION 			1000 * DURATION_MULTIPLE
 	ThisThread::sleep_for(SLEEP_DURATION);
-
-#endif
 }
 
 //!*****************************************************************************
@@ -286,8 +272,8 @@ void HardwareMbed::wait_for(uint32_t delay_ms)
 PinName HardwareMbed::get_pinnumber(PinNames pinname)
 {
 	switch (pinname) {
-		case port01CS:		return MBED_CONF_DEVICE_PIN_IO_LINK_SPI_CS;	    // SPI0_cs0
-		case port01IRQ:		return MBED_CONF_DEVICE_PIN_IO_LINK_SPI_IRQ;	// empty D port pin number
+		case port01CS:		return MBED_CONF_APP_IO_LINK_SPI_CS;	    // SPI0_cs0
+		case port01IRQ:		return MBED_CONF_APP_IO_LINK_SPI_IRQ;	    // empty D port pin number
 
 		case port23CS:		return PC_0;
 		case port23IRQ:		return PC_2;

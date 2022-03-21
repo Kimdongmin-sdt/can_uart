@@ -511,7 +511,6 @@ uint8_t Max14819::wakeUpRequest(PortSelect port, uint32_t * comSpeed_ret) {
             comReqRunning &= EstCom;
             timeOutCounter++;
 			Hardware->wait_for(1);
-        //} while (!comReqRunning);
         } while (comReqRunning || (timeOutCounter < INIT_WURQ_TIMEOUT));
 #endif
         printf("comReqRunning : %d\n", comReqRunning);

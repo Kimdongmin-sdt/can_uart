@@ -150,7 +150,13 @@ uint8_t IOLMasterPortMax14819::begin() {
    uint8_t pData[3];
    uint16_t VendorID;
    uint32_t DeviceID;
-   readDirectParameterPage(0x02, pData);
+   uint8_t MC = uint8_t((0 << 7) + (0b01 << 5) + 0x02);
+   uint8_t retValue2 = custom::SUCCESS;
+    uint8_t value1[1] = {0x01};
+   // Send processdata request to device
+   retValue2 = uint8_t(retValue2 | pDriver_->writeData(MC, 1, value1, 1, IOL::M_TYPE_0, port_));
+
+   //readDirectParameterPage(0x02, pData);
 
    // VendorID
 #if 1
@@ -338,7 +344,6 @@ uint8_t IOLMasterPortMax14819::readDirectParameterPage(uint8_t address, uint8_t 
 	}
 
 	MC = uint8_t((1 << 7) + (0b01 << 5) + address);
-
 	uint8_t retValue = custom::SUCCESS;
 
 	// Send processdata request to device
@@ -382,7 +387,7 @@ uint8_t IOLMasterPortMax14819::readPD(uint8_t *pData, uint8_t sizeData) {
 	}
 
     for (int i = 0; i < sizeData; i++) {
-        printf("pData[%2d] : 0x%02x\n", i, pData[i]);
+        //printf("pData[%2d] : 0x%02x\n", i, pData[i]);
     }
 
     putchar('\n');
