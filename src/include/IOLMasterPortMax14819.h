@@ -63,7 +63,7 @@ public:
 
     ~IOLMasterPortMax14819();
 
-    uint8_t begin();
+    uint8_t begin() __attribute__((optimize(0)));
 
     uint8_t end();
 

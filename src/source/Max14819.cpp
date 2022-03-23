@@ -296,12 +296,6 @@ uint8_t Max14819::begin(PortSelect port) {
         retValue = uint8_t(retValue | writeRegister(LEDCtrl, RxRdyEnB | RxErrEnB | shadowReg));
         // Initialize the Channel A register
         retValue = uint8_t(retValue | writeRegister(LCnfgB, LRT0 | LBL0 | LBL1 | LClimDis | LEn)); // Enable current retry 0.4s,  disable currentlimiting, enable Current
-        {
-            int temp = readRegister(LCnfgB);
-            printf("LCnfgB1 : 0x%02x\n", LRT0 | LBL0 | LBL1 | LClimDis | LEn);
-            printf("LCnfgB2 : 0x%02x\n", temp);
-        }
-        //exit(1);
         retValue = uint8_t(retValue | writeRegister(CQCfgB, SinkSel0 | PushPul)); // Int Current Sink, 5 mA, PushPull, Channel Enable
         break;
     default:
@@ -504,7 +498,6 @@ uint8_t Max14819::wakeUpRequest(PortSelect port, uint32_t * comSpeed_ret) {
         retValue = uint8_t(retValue | writeRegister(MsgCtrlB, 0)); // Dont use InsChks when transmit OD Data, max14819 doesnt calculate it right
         retValue = uint8_t(retValue | writeRegister(CQCtrlB, 0x00));
         retValue = uint8_t(retValue | writeRegister(CQCtrlB, EstCom));     // Start communication
-#if 1
         do {
             comReqRunning = readRegister(CQCtrlB);
              printf("read comReqRunning : %02x\n", comReqRunning);
@@ -512,8 +505,8 @@ uint8_t Max14819::wakeUpRequest(PortSelect port, uint32_t * comSpeed_ret) {
             timeOutCounter++;
 			Hardware->wait_for(1);
         } while (comReqRunning || (timeOutCounter < INIT_WURQ_TIMEOUT));
-#endif
-        printf("comReqRunning : %d\n", comReqRunning);
+
+        printf("comReqRunning : 0x%02x\n", comReqRunning);
         // Clear buffer
         length = readRegister(RxFIFOLvlB);
         for (uint8_t i = 0; i < length; i++) {
