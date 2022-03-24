@@ -39,6 +39,17 @@
 	#include <cstdio>
 #endif
 
+
+typedef union MSEQ{
+    struct {
+        unsigned char cmd:1;        //msb
+        unsigned char mc:2;
+        unsigned char addr:5;       //lsb
+
+    }s;
+    uint8_t data;
+}MSEQ_t;
+
 //!***** Macros ******************************************************************
 
 //!***** Data types **************************************************************
@@ -163,16 +174,41 @@ uint8_t IOLMasterPortMax14819::begin()
     readDirectParameterPage(0x0A, pData + 1);
     readDirectParameterPage(0x0B, pData + 2); // LSB
     DeviceID = (pData[0] << 16) + (pData[1] << 8) + pData[2];
+    constexpr int MAX_SIZE = 20;
+    char buffer[MAX_SIZE] = {0};
+
+    MSEQ_t  cmd;
+    cmd.s.cmd = 0;
+    cmd.s.addr = 0x10;
+    cmd.s.mc = 1;
+    readDirectParameterPage(cmd.s.addr, (uint8_t *)buffer); // MSB
+    printf("vendor name : ");
+    for (int i = 0; i < MAX_SIZE; i++) {
+        printf("%c", buffer[i]);
+    }
+
+    putchar('\n');
     printf("Vendor ID: 0x%04x, Device ID: 0x%08x\n", VendorID, DeviceID);
     pDriver_->Serial_Write(buf);
-    uint8_t value[1] = {IOL::MC::DEV_OPERATE};
-    uint8_t temp[1]= {IOL::MC::DEV_FALLBACK};
-    //pDriver_->writeData(IOL::MC::WRITE, 1, temp, 1, IOL::M_TYPE_0, port_);
-#if 1
-    if (pDriver_->writeData(IOL::MC::WRITE, 1, value, 1, IOL::M_TYPE_0, port_) == custom::ERROR) {
-#else
-    if (pDriver_->writeData(IOL::MC::WRITE, 1, temp, 1, IOL::M_TYPE_0, port_) == custom::ERROR) {
+
+#if 0
+    printf("command,0b%x,MC type,0b", temp_addr & 0x80);
+    for (int i = 6; i >= 5; i--) {
+        printf("%x", (temp_addr >> i) & (0x01));
+    }
+
+    printf(",addr,0b");
+    for (int i = 4; i >= 0; i--) {
+        printf("%x", (temp_addr >> i) & 0x01);
+    }
+
+    putchar('\n');
+    pDriver_->writeData(cmd, 1, temp_value, 1, IOL::M_TYPE_0, port_);
 #endif
+
+
+    uint8_t value[1] = {IOL::MC::DEV_OPERATE};
+    if (pDriver_->writeData(IOL::MC::WRITE, 1, value, 1, IOL::M_TYPE_0, port_) == custom::ERROR) {
         sprintf(buf, "Error operate driver01 PortA"); // TODO:
         pDriver_->Serial_Write(buf);
     }

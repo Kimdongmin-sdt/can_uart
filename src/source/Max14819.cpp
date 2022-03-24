@@ -594,7 +594,6 @@ uint8_t Max14819::readRegister(uint8_t reg) {
     buf[0] = reg;
     buf[1] = 0x00;
     // Send the device the register you want to read:
-    printf("%s !!\n", __func__);
     Hardware->SPI_Write(channel, buf, 2);
     // Return Registervalue
     return buf[1];
@@ -815,7 +814,6 @@ uint8_t Max14819::readData(uint8_t *pData, uint8_t sizeData, PortSelect port) {
         retValue = custom::ERROR;
     }
 
-    printf("read_cnt from SDO : %d\n", read_cnt);
     // Read data from FIFO
     for (uint8_t i = 0; i < sizeData; i++) {
         pData[i] = readRegister(bufferRegister);

@@ -81,7 +81,6 @@ namespace max14819 {
 	constexpr uint32_t INIT_WURQ_TIMEOUT    = 80u;   // Timeout in ms for abort WURQ request (2x retry after 10ms, 3x tries a 20ms)
 
 	// IO-Link Master Shield Max14819 Address
-	constexpr uint8_t port01Address_temp  = 0b01;
 	constexpr uint8_t port01Address  = 0;
 	constexpr uint8_t port23Address  = 2;
 

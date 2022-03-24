@@ -227,6 +227,7 @@ void HardwareMbed::SPI_Write(uint8_t channel, uint8_t * data, uint8_t length)
         break;
     }
 
+    uint8_t command = ((data[0] >> 7) & 0x01);
     printf("send, data[0] : 0x%02x,\t data[1] : 0x%02x\n", (data[0]), data[1]);
     for (int i = 0; i < length; i++) {
         data[i] = IOLINK_spi->write(data[i]);
