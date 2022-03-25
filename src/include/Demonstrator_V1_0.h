@@ -34,6 +34,7 @@
 //add your includes for the project Demonstrator_V1_0 here
 void Demo_setup(HardwareBase *hardware_loc);
 void Demo_loop();
+void process();
 
 //end of add your includes here
 

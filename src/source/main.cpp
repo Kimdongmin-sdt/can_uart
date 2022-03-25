@@ -9,7 +9,8 @@ int main(void)
     Demo_setup(&hardware_loc);
 
     while (true) {
-        Demo_loop();
+        process();
+        ThisThread::sleep_for(10s);
     }
     return 0;
 }

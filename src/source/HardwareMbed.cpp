@@ -226,15 +226,16 @@ void HardwareMbed::SPI_Write(uint8_t channel, uint8_t * data, uint8_t length)
         IO_Write(port23CS, 0);
         break;
     }
-
-    uint8_t command = ((data[0] >> 7) & 0x01);
+#if 0
     printf("send, data[0] : 0x%02x,\t data[1] : 0x%02x\n", (data[0]), data[1]);
+#endif
     for (int i = 0; i < length; i++) {
         data[i] = IOLINK_spi->write(data[i]);
     }
 
+#if 0
     printf("recv, data[0] : 0x%02x,\t data[1] : 0x%02x\n", (data[0]), (data[1]));
-
+#endif
     ThisThread::sleep_for(50ms);
     // Disable chipselect -> output high (low-active)
     IO_Write(port01CS, 1);

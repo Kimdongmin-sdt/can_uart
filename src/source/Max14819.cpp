@@ -655,64 +655,6 @@ uint8_t Max14819::writeRegister(uint8_t reg, uint8_t data) {
 //!******************************************************************************
 //!  function :    	writeData
 //!******************************************************************************
-//!  \brief        	send data to device
-//!
-//!  \type        	local
-//!
-//!  \param[in]     mc                  master command
-//!  \param[in]     sizeData            size in Byte of data
-//!  \param[in]     *pData              pointer to data
-//!  \param[in]     sizeAnswer          size in byte of answer
-//!  \param[in]     mSeqType           M-seqence type
-//!  \param[in]     port                port to send data
-//!
-//!  \return        0 if success
-//!
-//!******************************************************************************
-uint8_t Max14819::writeData(uint8_t mc, uint8_t data, uint8_t sizeAnswer, uint8_t mSeqType, PortSelect port) {
-    uint8_t retValue = custom::SUCCESS;
-
-    uint8_t bufferRegister;
-    // Use corresponding transmit FIFO address
-    switch(port){
-      case PORTA:
-          bufferRegister = TxRxDataA;
-          break;
-      case PORTB:
-          bufferRegister = TxRxDataB;
-          break;
-      default:
-          bufferRegister = 0;
-          retValue = custom::ERROR;
-          break;
-      } // switch(port)
-
-    // Write message to max14819 FIFO
-    retValue = uint8_t(retValue | writeRegister(bufferRegister, sizeAnswer)); // number of bytes for answer
-    retValue = uint8_t(retValue | writeRegister(bufferRegister, 3)); // 3 bytes to send including master command and checksum
-    retValue = uint8_t(retValue | writeRegister(bufferRegister, mc)); // begin of message, master command
-    retValue = uint8_t(retValue | writeRegister(bufferRegister, calculateCKT(mc, &data, 1, mSeqType))); // second byte of message, checksum (CKT)
-    retValue = uint8_t(retValue | writeRegister(bufferRegister, data)); // send data to buffer, increment address of data after every byte
-
-    // Enable transmit message
-    switch(port){
-    case PORTA:
-        retValue = uint8_t(retValue | writeRegister(CQCtrlA, CQSend | comSpeedRegA));
-        break;
-    case PORTB:
-        retValue = uint8_t(retValue | writeRegister(CQCtrlB, CQSend | comSpeedRegB));
-        break;
-    default:
-        retValue = custom::ERROR;
-        break;
-    } // switch(port)
-
-    // Return Error state
-    return retValue;
-}
-//!******************************************************************************
-//!  function :    	writeData
-//!******************************************************************************
 //!  \brief       	send data to device
 //!
 //!  \type        	local
@@ -729,7 +671,6 @@ uint8_t Max14819::writeData(uint8_t mc, uint8_t data, uint8_t sizeAnswer, uint8_
 //!******************************************************************************
 uint8_t Max14819::writeData(uint8_t mc, uint8_t sizeData, uint8_t *pData, uint8_t sizeAnswer, uint8_t mSeqType, PortSelect port) {
     uint8_t retValue = custom::SUCCESS;
-
     // Test if message is not too long
     if ((sizeData + 2) > MAX_MSG_LENGTH) { //include 1 byte masterc ommand and 1 byte for checksum
         return custom::ERROR;
@@ -774,7 +715,6 @@ uint8_t Max14819::writeData(uint8_t mc, uint8_t sizeData, uint8_t *pData, uint8_
    } // switch(port)
     // Return Error state
     return retValue;
-
 }
 //!******************************************************************************
 //!  function :    	readData

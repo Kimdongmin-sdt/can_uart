@@ -341,4 +341,5 @@ namespace max14819 {
     };// class max14819
 } // namespace max14819
 
+extern uint8_t calculateCKT(uint8_t mc, uint8_t *data, uint8_t dataSize, uint8_t type);
 #endif //MAX14819_H_INCLUDED
