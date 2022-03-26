@@ -333,8 +333,9 @@ typedef union {
         CKS_t _cks;             //8
         unsigned char _process_data;    //8
         unsigned char on_req_data;      //8
+        unsigned char sub_idx;
     }st;
-    uint8_t bytes[3];       //32
+    uint8_t bytes[4];       //32
     unsigned int raw;       //32 bit
 } ISDU_RECV_u;
 
@@ -408,6 +409,10 @@ void Demo_setup(HardwareBase *hardware_loc)
 #define SSC2_SWITCH_ON_DELAY_SET_VALUE          5600
 #define SSC2_SWITCH_OFF_DELAY_SET_VALUE         5500
 
+#define TI_RES_ADDR                             59
+#define TI_RES_ADDR_SUBIDX                       0
+#define ISDU_REQ_2_FORMAT                       96
+
 
 uint8_t CalculateCHKPDU( char* pData, size_t size)
 {
@@ -443,8 +448,8 @@ void process(void)
         case SETUP: {
             switch (_SensorSetupStep) {
             case SETUP_STEP_0:{
+#if 0
                 memset( ProcessData,0,sizeof(ProcessData));
-
 
                 ProcessData[nPos++]=(ON_REQ_DATA_DEFAULT & 0Xff );
                 WORD_t temp;
@@ -482,25 +487,50 @@ void process(void)
                 printf("byteframe [0]=0x%x,[1]=0x%x,[2]=0x%x,[3]=0x%x\n",send_msg.bytes[0], send_msg.bytes[1], send_msg.bytes[2], send_msg.bytes[3]);
                 printf("mc=0x%x, processdata=0x%x, ckt=0x%x\n",send_msg.st._mc.data, send_msg.st._process_data,send_msg.st._ckt );
                 printf("mc_type :  0x%x, mc_addr : 0x%x, mc_rw_flag : 0x%x\n", send_msg.st._mc.bits.mc_tye, send_msg.st._mc.bits.addr,  send_msg.st._mc.bits.rw_flag);
-#if 1
                 pDriver01->writeRegister(TxRxDataB, send_msg.bytes[0]);
                 pDriver01->writeRegister(TxRxDataB, send_msg.st._ckt.data);
                 pDriver01->writeRegister(TxRxDataB, send_msg.st._process_data);
                 pDriver01->writeRegister(TxRxDataB, send_msg.st.on_req_data);
 #endif
+                ISDU_SEND_u send_msg;
+                send_msg.raw=0;
+                send_msg.st._mc.bits.mc_tye = 0xa6;
+                send_msg.st._mc.bits.addr = FLOW_CTRL_COUNT_x00;
+                send_msg.st._mc.bits.rw_flag = IOLINK_MC_TYPE_READ;
 
-                _SensorSetupStep = SETUP_STEP_1;
-                ThisThread::sleep_for(50ms);
+                //CalculateCHKPDU( (char*)ProcessData,nPos );
+
+                uint8_t sub_idx = 0;
+                uint8_t i_service = 0xa6;
+                uint8_t ti_res_addr = TI_RES_ADDR;
+                uint8_t ti_res_addr_subidx = TI_RES_ADDR_SUBIDX;
+
+                uint16_t crc_check = 0;
+                crc_check ^= i_service;
+                crc_check ^= ti_res_addr;
+                crc_check ^= ti_res_addr_subidx;
+
+                pDriver01->writeRegister(TxRxDataB, i_service);
+                pDriver01->writeRegister(TxRxDataB, ti_res_addr);
+                pDriver01->writeRegister(TxRxDataB, ti_res_addr_subidx);
+                pDriver01->writeRegister(TxRxDataB, crc_check);
+
+                uint8_t pData[6];
+                for (int i = 0 ; i < 6; i++) {
+                    pData[i] = 10;
+                }
+
+                uint8_t sizeData = 6;
+                pDriver01->readData(pData, sizeData, _port);
+                printf("pData[0] : 0x%02x, pData[1] : 0x%02x, pData[2] : 0x%02x, pData[3] : 0x%02x, pData[4] : 0x%02x, pData[5] : 0x%02x\n", pData[0],pData[1],pData[2],pData[3], pData[4], pData[5]);
             } break;
             case SETUP_STEP_1:{
                 ISDU_SEND_u send_msg;
-                // FC
                 send_msg.raw=0;
                 send_msg.st._mc.bits.mc_tye = IOLINK_MC_TYPE_ISDU;
                 send_msg.st._mc.bits.addr = FLOW_CTRL_COUNT_x00;
-                send_msg.st._mc.bits.rw_flag = IOLINK_MC_TYPE_WRITE;
+                send_msg.st._mc.bits.rw_flag = IOLINK_MC_TYPE_READ;
                 send_msg.st._process_data = ProcessData[nPos++];
-
                 // FC
 
                 //CKT
@@ -588,9 +618,6 @@ void process(void)
                 printf("mc=0x%x, processdata=0x%x, ckt=0x%x\n",send_msg.st._mc.data, send_msg.st._process_data,send_msg.st._ckt );
                 printf("mc_type :  0x%x, mc_addr : 0x%x, mc_rw_flag : 0x%x\n", send_msg.st._mc.bits.mc_tye, send_msg.st._mc.bits.addr,  send_msg.st._mc.bits.rw_flag);
 
-
-
-
                 pDriver01->writeRegister(TxRxDataB, send_msg.bytes[0]);
                 pDriver01->writeRegister(TxRxDataB, send_msg.st._ckt.data);
                 pDriver01->writeRegister(TxRxDataB, send_msg.st._process_data);
@@ -601,7 +628,6 @@ void process(void)
             }break;
             }
             break;
-
         }
         case READ: {
             uint8_t pData[4];
@@ -616,7 +642,7 @@ void process(void)
         } break;
 
         default:
-            break;
+             break;
         }
 
         ThisThread::sleep_for(50);
