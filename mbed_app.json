@@ -1,0 +1,33 @@
+{
+    "config" : {
+        "iecn_can_board_rx" : {
+            "help" : "iecn_can_board_rx"
+        },
+        "iecn_can_board_tx" : {
+            "help" : "iecn_can_board_tx"
+        },
+        "can_sensor_uart_rx" : {
+            "help" : "can_sensor_uart_rx"
+        },
+        "can_sensor_uart_tx" : {
+            "help" : "can_sensor_uart_tx"
+        },
+        "proximity_input_pin" : {
+            "help" : "proximity_input_pin"
+        }
+    },
+    "target_overrides": {
+        "*" : {
+            "platform.stdio-baud-rate"          : 115200,
+            "target.stdio_uart_tx"              : "PD_5",
+            "target.stdio_uart_rx"              : "PD_6"
+        },
+        "NUCLEO_F429ZI": {
+            "iecn_can_board_rx"                 : "PB_8",
+            "iecn_can_board_tx"                 : "PB_9",
+            "can_sensor_uart_rx"                : "PA_10",
+            "can_sensor_uart_tx"                : "PA_9",
+            "proximity_input_pin"               : "PD_0"
+        }
+    }
+}
